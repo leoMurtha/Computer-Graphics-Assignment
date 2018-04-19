@@ -56,10 +56,16 @@ Circle Spyder::getAbdomen(){
 /* Function called inside the move in case the there is a need for the spyder to move */ 
 void Spyder::turn(Point f){
 	float angle = asin(sin((cephalo.c.x - f.x)/dist(cephalo.c,f)));
+
+	glPushMatrix();
+	glTranslatef(0,0,0);
+	glRotatef(angle,cephalo.c.x, cephalo.c.y, 0);	
+
+	glPopMatrix();
 }
 
 void Spyder::move(Point f){
-
+	turn(f);
 }
 
 /* Draws the entire spyder */

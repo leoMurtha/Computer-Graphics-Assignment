@@ -12,6 +12,7 @@
 #include <Spyder.h>
 
 Spyder spyder = Spyder();
+Point p;
 
 float dist(Point i, Point f){
 	return sqrt(pow((i.x - f.x),2) + pow((i.y - f.y),2));
@@ -63,6 +64,19 @@ void update(int val){
 	glutPostRedisplay(); // Calls the display function again
 }
 
+void mouse(GLint button, GLint state, GLint x, GLint y){
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+		p.x = x;
+		p.y = WINDOW_WIDTH - y;				
+		
+		printf("%f %f\n", p.x, p.y);	
+		spyder.move(p);
+		glutPostRedisplay();
+	}
+	
+}
+
+
 int main(int argc, char *argv[]){
 	// Start up the glut	
 	glutInit(&argc, argv);
@@ -79,6 +93,8 @@ int main(int argc, char *argv[]){
 
 	defaultInit();
 
+
+	glutMouseFunc(mouse);
 	glutDisplayFunc(display);
 	glutTimerFunc(fps, update, 0);
 	
