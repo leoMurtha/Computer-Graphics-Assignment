@@ -17,11 +17,14 @@ typedef struct {
 }Point;
 
 typedef struct {
-	float x,y,r;
+	Point c;
+	float r;
 }Circle;
 
 void circle(Circle);
 
 void line(Point, Point);
+
+float dist(Point, Point);
 
 #endif

@@ -13,6 +13,10 @@
 
 Spyder spyder = Spyder();
 
+float dist(Point i, Point f){
+	return sqrt(pow((i.x - f.x),2) + pow((i.y - f.y),2));
+}
+
 void line(Point p1, Point p2){
 	glLineWidth(3);
 	glColor3f(1,0,0);
@@ -22,10 +26,10 @@ void line(Point p1, Point p2){
 	glEnd();
 }
 
-void circle(Circle c){
+void circle(Circle t){
 	double thetha = 0;
 		glBegin(GL_LINE_STRIP);
-		for(int i = 0; i <= lines; i++, thetha = (2*M_PI*i)/lines) glVertex2f(c.x + c.r*cos(thetha), c.y + c.r*sin(thetha));		
+		for(int i = 0; i <= lines; i++, thetha = (2*M_PI*i)/lines) glVertex2f(t.c.x + t.r*cos(thetha), t.c.y + t.r*sin(thetha));		
 		glEnd();
 }
 
