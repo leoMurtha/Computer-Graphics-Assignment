@@ -14,8 +14,47 @@
 Spyder spyder = Spyder();
 Point p;
 
+float dot2D(Point A, Point B){
+	return (A.x)*(B.x) + (A.y)*(B.y);
+}
+
 float dist(Point i, Point f){
 	return sqrt(pow((i.x - f.x),2) + pow((i.y - f.y),2));
+}
+
+float getAngle(Point a, Point b, Point c){
+	Point A,B;
+	A.x = b.x - a.x;
+	A.y = b.y - a.y;
+	B.x = c.x - a.x;
+	B.y = c.y - a.y;
+	return acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
+}
+
+/* Uses first point as base */
+void translate(Point *v, Point t, int n){
+	int dx = t.x - v[0].x;
+	int dy = t.y - v[0].y;
+
+	for(int i = 0; i < n; i++){
+		v[i].x += dx;
+		v[i].y += dy;
+	}
+}
+
+void scale(Point *v, float s, int n){
+	for(int i = 0; i < n; i++){
+		v[i].x *= s;
+		v[i].y *= s;
+	}
+}
+
+void rotate(Point *v, float angle, int n){
+	for(int i = 0; i < n; i++){
+		double xT = v[i].x;
+		v[i].x = v[i].x*cos(angle) - v[i].y*sin(angle);
+		v[i].y = xT*sin(angle) + v[i].y*cos(angle);
+	}
 }
 
 void line(Point p1, Point p2){

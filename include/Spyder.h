@@ -3,15 +3,15 @@
 
 #include <T1.h>
 
-
 typedef struct {
-	Point seg[3]; /* Leg has three segments */ 
+	Point seg[3]; /* Leg has two segments */ 
 }Leg;
 
 /* Spyder class its atributes and methods */
 class Spyder{
 	private:	
 		Circle cephalo, abdomen;
+		Point auxx;
 		Leg leftL[4], rightL[4];
 		float ldX = 50.0f, ldY = 30.0f;
 	public:
@@ -27,6 +27,5 @@ class Spyder{
 		void turn(Point);
 
 };
-
 
 #endif 

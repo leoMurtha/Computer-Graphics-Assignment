@@ -23,9 +23,11 @@ Spyder::Spyder(){
 	cephalo.c.x = abdomen.c.x;
 	cephalo.c.y = abdomen.c.y + (abdomen.r+cephalo.r); 
 	
-	initLegs();
-
+	auxx.x = cephalo.c.x;
+	auxx.y = cephalo.c.y - cephalo.r;
 	
+	initLegs();
+		
 }
 
 void Spyder::initLegs(){
@@ -55,13 +57,19 @@ Circle Spyder::getAbdomen(){
 
 /* Function called inside the move in case the there is a need for the spyder to move */ 
 void Spyder::turn(Point f){
-	float angle = asin(sin((cephalo.c.x - f.x)/dist(cephalo.c,f)));
+	float angle = getAngle(abdomen.c, cephalo.c, f);
+	Point p = abdomen.c;
+	Point *v = (Point*)malloc(sizeof(Point)*2);
+	v[0] = abdomen.c;
+	v[1] = cephalo.c;
+	printf("ANGLE %f\n", angle);
+	translate(v,Point {}, 2);
+	rotate(v,angle, 2);
+	translate(v, p, 2);
+	abdomen.c = v[0];
+	cephalo.c = v[1];
 
-	glPushMatrix();
-	glTranslatef(0,0,0);
-	glRotatef(angle,cephalo.c.x, cephalo.c.y, 0);	
 
-	glPopMatrix();
 }
 
 void Spyder::move(Point f){
@@ -73,6 +81,7 @@ void Spyder::draw(){
 	circle(abdomen);
 	circle(cephalo);
 
+	line(cephalo.c, abdomen.c);
 	for(int i = 0; i < 4; i++){
 		line(leftL[i].seg[0], leftL[i].seg[1]);
 		line(leftL[i].seg[1], leftL[i].seg[2]);
