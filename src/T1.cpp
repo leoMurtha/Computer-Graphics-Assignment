@@ -12,6 +12,37 @@
 #include <Spyder.h>
 
 Spyder spyder = Spyder();
+Point p;
+
+float dist(Point i, Point f){
+	return sqrt(pow((i.x - f.x),2) + pow((i.y - f.y),2));
+}
+
+/* Uses first point as base */
+void translate(Point *v, Point t, int n){
+	int dx = t.x - v[0].x;
+	int dy = t.y - v[0].y;
+
+	for(int i = 0; i < n; i++){
+		v[i].x += dx;
+		v[i].y += dy;
+	}
+}
+
+void scale(Point *v, float s){
+	for(int i = 0; i < 2; i++){
+		v[i].x *= s;
+		v[i].y *= s;
+	}
+}
+
+void rotate(Point *v, float angle, int n){
+	for(int i = 0; i < n; i++){
+		double xT = v[i].x;
+		v[i].x = v[i].x*cos(angle) - v[i].y*sin(angle);
+		v[i].y = xT*sin(angle) + v[i].y*cos(angle);
+	}
+}
 
 void line(Point p1, Point p2){
 	glLineWidth(3);
@@ -22,10 +53,10 @@ void line(Point p1, Point p2){
 	glEnd();
 }
 
-void circle(Circle c){
+void circle(Circle t){
 	double thetha = 0;
 		glBegin(GL_LINE_STRIP);
-		for(int i = 0; i <= lines; i++, thetha = (2*M_PI*i)/lines) glVertex2f(c.x + c.r*cos(thetha), c.y + c.r*sin(thetha));		
+		for(int i = 0; i <= lines; i++, thetha = (2*M_PI*i)/lines) glVertex2f(t.c.x + t.r*cos(thetha), t.c.y + t.r*sin(thetha));		
 		glEnd();
 }
 
@@ -59,6 +90,19 @@ void update(int val){
 	glutPostRedisplay(); // Calls the display function again
 }
 
+void mouse(GLint button, GLint state, GLint x, GLint y){
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+		p.x = x;
+		p.y = WINDOW_WIDTH - y;				
+		
+		printf("%f %f\n", p.x, p.y);	
+		spyder.move(p);
+		glutPostRedisplay();
+	}
+	
+}
+
+
 int main(int argc, char *argv[]){
 	// Start up the glut	
 	glutInit(&argc, argv);
@@ -75,6 +119,8 @@ int main(int argc, char *argv[]){
 
 	defaultInit();
 
+
+	glutMouseFunc(mouse);
 	glutDisplayFunc(display);
 	glutTimerFunc(fps, update, 0);
 	

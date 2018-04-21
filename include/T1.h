@@ -17,11 +17,20 @@ typedef struct {
 }Point;
 
 typedef struct {
-	float x,y,r;
+	Point c;
+	float r;
 }Circle;
 
 void circle(Circle);
 
 void line(Point, Point);
+
+float dist(Point, Point);
+
+void translate(Point*, Point);
+
+void scale(Point*, float);
+
+void rotate(Point *, float, int);
 
 #endif
