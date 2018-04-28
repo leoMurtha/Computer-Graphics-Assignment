@@ -27,10 +27,12 @@ void line(Point, Point);
 
 float dist(Point, Point);
 
-void translate(Point*, Point);
+void translate(Point*, Point, int);
 
-void scale(Point*, float);
+void scale(Point*, float, int);
 
 void rotate(Point *, float, int);
+
+float getAngle(Point, Point, Point);
 
 #endif

@@ -4,7 +4,7 @@
 #include <T1.h>
 
 typedef struct {
-	Point seg[3]; /* Leg has three segments */ 
+	Point seg[3]; /* Leg has two segments */ 
 }Leg;
 
 /* Spyder class its atributes and methods */
@@ -21,7 +21,7 @@ class Spyder{
 		void setLegs(Leg [], Leg[]);
 		Circle getCephalo();
 		Circle getAbdomen();
-		void draw();
+		void draw(Point);
 		void initLegs();
 		void move(Point);
 		void turn(Point);

@@ -14,8 +14,21 @@
 Spyder spyder = Spyder();
 Point p;
 
+float dot2D(Point A, Point B){
+	return (A.x)*(B.x) + (A.y)*(B.y);
+}
+
 float dist(Point i, Point f){
 	return sqrt(pow((i.x - f.x),2) + pow((i.y - f.y),2));
+}
+
+float getAngle(Point a, Point b, Point c){
+	Point A,B;
+	A.x = b.x - a.x;
+	A.y = b.y - a.y;
+	B.x = c.x - a.x;
+	B.y = c.y - a.y;
+	return acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
 }
 
 /* Uses first point as base */
@@ -29,8 +42,8 @@ void translate(Point *v, Point t, int n){
 	}
 }
 
-void scale(Point *v, float s){
-	for(int i = 0; i < 2; i++){
+void scale(Point *v, float s, int n){
+	for(int i = 0; i < n; i++){
 		v[i].x *= s;
 		v[i].y *= s;
 	}
@@ -65,7 +78,7 @@ void display(){
   glClear(GL_COLOR_BUFFER_BIT);
   
   glColor3f(0,0,0);
-  spyder.draw();
+  spyder.draw(p);
 
   glFlush();
 }
@@ -93,7 +106,7 @@ void update(int val){
 void mouse(GLint button, GLint state, GLint x, GLint y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		p.x = x;
-		p.y = WINDOW_WIDTH - y;				
+		p.y = WINDOW_HEIGHT - y;				
 		
 		printf("%f %f\n", p.x, p.y);	
 		spyder.move(p);
