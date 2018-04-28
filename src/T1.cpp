@@ -49,6 +49,17 @@ void scale(Point *v, float s, int n){
 	}
 }
 
+void rotate2(Point f, float angle){
+	//glMatrixMode(GL_MODELVIEW);
+	
+	glPushMatrix();
+	glTranslatef(f.x, f.y, 0);
+	glRotatef(angle, 0.0, 0.0, 1.0);
+	glTranslatef(-f.x, -f.y, 0);
+	spyder.draw();
+	glPopMatrix();
+}
+
 void rotate(Point *v, float angle, int n){
 	for(int i = 0; i < n; i++){
 		double xT = v[i].x;
@@ -78,19 +89,22 @@ void display(){
   glClear(GL_COLOR_BUFFER_BIT);
   
   glColor3f(0,0,0);
-  spyder.draw(p);
+  spyder.draw();
+  line(spyder.getAbdomen().c, p);
+	
 
-  glFlush();
+  //glFlush();
 }
 
 void defaultInit(){
 	// Sets the color thar glClear will 'paint' in RGBA
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	// Sets the matrix with projection wich will do alot of matrix operations
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	glMatrixMode(GL_PROJECTION); // signal that I want to work with the projection stack
+	glLoadIdentity(); // make sure that the projection stack doesn't already have anything on it
+	glMatrixMode(GL_MODELVIEW); // the rest of my app will only change MODELVIEW 
+	glLoadIdentity(); // make sure that the modelview stack doesn't already have anything on it
+	
 	glLineWidth(3); 
 	glEnable(GL_LINE_SMOOTH);
 		
@@ -110,7 +124,7 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		
 		printf("%f %f\n", p.x, p.y);	
 		spyder.move(p);
-		glutPostRedisplay();
+		//glutPostRedisplay();
 	}
 	
 }

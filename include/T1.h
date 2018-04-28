@@ -33,6 +33,8 @@ void scale(Point*, float, int);
 
 void rotate(Point *, float, int);
 
+void rotate2(Point, float);
+
 float getAngle(Point, Point, Point);
 
 #endif

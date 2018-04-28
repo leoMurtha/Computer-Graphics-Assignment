@@ -21,7 +21,7 @@ class Spyder{
 		void setLegs(Leg [], Leg[]);
 		Circle getCephalo();
 		Circle getAbdomen();
-		void draw(Point);
+		void draw();
 		void initLegs();
 		void move(Point);
 		void turn(Point);
