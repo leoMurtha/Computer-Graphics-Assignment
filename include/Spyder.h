@@ -11,7 +11,7 @@ typedef struct {
 class Spyder{
 	private:	
 		Circle cephalo, abdomen;
-		Point auxx;
+		float speed;
 		Leg leftL[4], rightL[4];
 		float ldX = 50.0f, ldY = 30.0f;
 	public:
@@ -25,7 +25,7 @@ class Spyder{
 		void initLegs();
 		void move(Point);
 		void turn(Point);
-
+		void updatePos();
 };
 
 #endif 

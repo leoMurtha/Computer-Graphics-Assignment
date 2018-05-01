@@ -3,8 +3,8 @@
 
 using namespace std;
 
-#define WINDOW_WIDTH  1200
-#define WINDOW_HEIGHT  800
+#define WINDOW_WIDTH  1000
+#define WINDOW_HEIGHT  600
 #define fps 100/6
 #define W 119
 #define S 115

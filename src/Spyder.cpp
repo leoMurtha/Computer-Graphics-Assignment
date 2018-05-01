@@ -15,19 +15,21 @@ using namespace std;
 
 /* Creates a random spyder, can be changed later */
 Spyder::Spyder(){
-	abdomen.r = 80;
-	abdomen.c.x = WINDOW_WIDTH/2;
-	abdomen.c.y = WINDOW_HEIGHT/2; 
+	cephalo.r = 40;
+	cephalo.c.x = WINDOW_WIDTH/2;
+	cephalo.c.y = WINDOW_HEIGHT/2 + 120; 
+	abdomen.r = cephalo.r*2;
+
+	speed = 1.0f;
 	
-	cephalo.r = abdomen.r/2;
-	cephalo.c.x = abdomen.c.x;
-	cephalo.c.y = abdomen.c.y + (abdomen.r+cephalo.r); 
-	
-	auxx.x = cephalo.c.x;
-	auxx.y = cephalo.c.y - cephalo.r;
+	updatePos();
+}
+
+void Spyder::updatePos(){
+	abdomen.c.x = cephalo.c.x;
+	abdomen.c.y = cephalo.c.y - (abdomen.r+cephalo.r); 
 	
 	initLegs();
-
 }
 
 void Spyder::initLegs(){
@@ -59,27 +61,21 @@ Circle Spyder::getAbdomen(){
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
 	angle = angle*180/M_PI;
-	printf("ANGLE %f\n", angle);
+
+	printf("Angle : %f\n", angle);
 	
-	/*Point p = abdomen.c;
-	Point *v = (Point*)malloc(sizeof(Point)*10);
-	v[0] = abdomen.c;
-	v[1] = cephalo.c;
-
-	translate(v,Point {}, 2);
-	rotate(v,-angle, 2	);
-	translate(v, p, 2);
-	abdomen.c = v[0];
-	cephalo.c = v[1];
-	initLegs(angle);*/
-
-
-	rotate2(abdomen.c, -angle);
-
+	glTranslatef(abdomen.c.x, abdomen.c.y, 0);
+	glRotatef(angle, 0.0, 0.0, 1.0);
+	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0);
+	
 }
 
 void Spyder::move(Point f){
-	turn(f);
+	if(f.x - cephalo.c.x < 0) cephalo.c.x -= speed;
+	else if(f.x - cephalo.c.x > 0) cephalo.c.x += speed;
+	if(f.y - cephalo.c.y < 0) cephalo.c.y -= speed;
+	else if(f.y - cephalo.c.y > 0) cephalo.c.y += speed;
+	updatePos();
 }
 
 /* Draws the entire spyder */
@@ -94,8 +90,6 @@ void Spyder::draw(){
 		line(rightL[i].seg[0], rightL[i].seg[1]);
 		line(rightL[i].seg[1], rightL[i].seg[2]);
 	}
-	
 
-	glFlush();
 }
 
