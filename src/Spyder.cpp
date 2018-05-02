@@ -61,17 +61,15 @@ Circle Spyder::getAbdomen(){
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
 	angle = angle*180/M_PI;
-
-	printf("Angle : %f\n", angle);
 	
 	glTranslatef(abdomen.c.x, abdomen.c.y, 0);
-	glRotatef(angle, 0.0, 0.0, 1.0);
+	if(f.x - cephalo.c.x < 0) glRotatef(angle, 0, 0, 1.0);
+	else if(f.x - cephalo.c.x > 0) glRotatef(-angle, 0, 0, 1.0);
 	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0);
-	
 }
 
-void Spyder::move( Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
-
+void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
+	turn(f);
 
 
 	// VETOR DE DIREÇÃO
