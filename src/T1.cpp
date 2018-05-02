@@ -13,6 +13,7 @@
 
 Spyder spyder = Spyder();
 Point p;
+bool moved;
 
 float dot2D(Point A, Point B){
 	return (A.x)*(B.x) + (A.y)*(B.y);
@@ -49,6 +50,11 @@ void scale(Point *v, float s, int n){
 	}
 }
 
+void rotate2(Point f, float angle){
+	//glMatrixMode(GL_MODELVIEW);
+	
+}
+
 void rotate(Point *v, float angle, int n){
 	for(int i = 0; i < n; i++){
 		double xT = v[i].x;
@@ -75,25 +81,43 @@ void circle(Circle t){
 
 
 void display(){
-  glClear(GL_COLOR_BUFFER_BIT);
-  
-  glColor3f(0,0,0);
-  spyder.draw(p);
+	glClear(GL_COLOR_BUFFER_BIT);
+  	glColor3f(0,0,0);
+  	
+	glPushMatrix();
+	if(moved){
+		spyder.turn(p);
+		moved = false;
+		printf("asdsad\n");
+	}
+	spyder.draw();
+	glPopMatrix();
 
-  glFlush();
+	spyder.move(p);
+    
+	/*glPushMatrix();
+	line(spyder.getAbdomen().c, p);
+	glPopMatrix();*/
+
+  	glFlush();
+  	glutPostRedisplay();
+
 }
 
 void defaultInit(){
 	// Sets the color thar glClear will 'paint' in RGBA
 	glClearColor(1.0, 1.0, 1.0, 1.0);
 	// Sets the matrix with projection wich will do alot of matrix operations
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
+	glMatrixMode(GL_PROJECTION); // signal that I want to work with the projection stack
+	glLoadIdentity(); // make sure that the projection stack doesn't already have anything on it
+	glMatrixMode(GL_MODELVIEW); // the rest of my app will only change MODELVIEW 
 	glLoadIdentity();
 	glLineWidth(3); 
 	glEnable(GL_LINE_SMOOTH);
-		
+	
+	p.x = WINDOW_WIDTH/2;
+	p.y = WINDOW_HEIGHT/2 + 120;	
+	moved = false;
 	// define a 2D orthographic projection matrix
 	gluOrtho2D(0, WINDOW_WIDTH, 0 , WINDOW_HEIGHT);
 }
@@ -108,13 +132,24 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		p.x = x;
 		p.y = WINDOW_HEIGHT - y;				
 		
-		printf("%f %f\n", p.x, p.y);	
-		spyder.move(p);
+		moved = true;
 		glutPostRedisplay();
 	}
 	
 }
 
+void idle(void){
+	glPushMatrix();
+	if(moved){
+		spyder.turn(p);
+		moved = false;
+		printf("asdsad\n");
+	}
+	glPopMatrix();
+
+	spyder.move(p);
+    glutPostRedisplay();
+}
 
 int main(int argc, char *argv[]){
 	// Start up the glut	
@@ -132,14 +167,12 @@ int main(int argc, char *argv[]){
 
 	defaultInit();
 
-
 	glutMouseFunc(mouse);
 	glutDisplayFunc(display);
-	glutTimerFunc(fps, update, 0);
-	
+	//glutIdleFunc(idle);
+
 	
 	glutMainLoop();
-
 
 	return EXIT_SUCCESS;
 }
