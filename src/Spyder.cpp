@@ -20,7 +20,7 @@ Spyder::Spyder(){
 	cephalo.c.y = WINDOW_HEIGHT/2 + 120; 
 	abdomen.r = cephalo.r*2;
 
-	speed = 1.0f;
+	speed = 4.0f;
 	
 	updatePos();
 }
@@ -61,12 +61,12 @@ Circle Spyder::getAbdomen(){
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
 	angle = angle*180/M_PI;
-
-	printf("Angle : %f\n", angle);
 	
 	glTranslatef(abdomen.c.x, abdomen.c.y, 0);
 	glRotatef(angle, 0.0, 0.0, 1.0);
 	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0);
+	
+	printf("Angle (%f,%f) : %f\n", angle,abdomen.c.x, abdomen.c.y);
 	
 }
 

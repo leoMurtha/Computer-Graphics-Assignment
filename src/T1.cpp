@@ -84,24 +84,24 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
   	glColor3f(0,0,0);
   	
+
 	glPushMatrix();
 	if(moved){
+		printf("asuhsahuhsauhusahu\n");
 		spyder.turn(p);
 		moved = false;
 		printf("asdsad\n");
 	}
 	spyder.draw();
 	glPopMatrix();
-
+	
 	spyder.move(p);
-    
-	/*glPushMatrix();
+
+	glPushMatrix();
 	line(spyder.getAbdomen().c, p);
-	glPopMatrix();*/
+	glPopMatrix();
 
   	glFlush();
-  	glutPostRedisplay();
-
 }
 
 void defaultInit(){
@@ -122,10 +122,6 @@ void defaultInit(){
 	gluOrtho2D(0, WINDOW_WIDTH, 0 , WINDOW_HEIGHT);
 }
 
-void update(int val){
-	glutTimerFunc(fps, update, 0); // Calls update again
-	glutPostRedisplay(); // Calls the display function again
-}
 
 void mouse(GLint button, GLint state, GLint x, GLint y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
@@ -138,17 +134,8 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 	
 }
 
-void idle(void){
-	glPushMatrix();
-	if(moved){
-		spyder.turn(p);
-		moved = false;
-		printf("asdsad\n");
-	}
-	glPopMatrix();
-
-	spyder.move(p);
-    glutPostRedisplay();
+void idle(void){	
+    //glutPostRedisplay();
 }
 
 int main(int argc, char *argv[]){
@@ -169,8 +156,7 @@ int main(int argc, char *argv[]){
 
 	glutMouseFunc(mouse);
 	glutDisplayFunc(display);
-	//glutIdleFunc(idle);
-
+	glutIdleFunc(idle);
 	
 	glutMainLoop();
 
