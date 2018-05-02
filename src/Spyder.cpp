@@ -60,7 +60,7 @@ Circle Spyder::getAbdomen(){
 /* Function called inside the move in case the there is a need for the spyder to move */ 
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
-	
+	printf("%f\n", cos(230));
 	/*
 		Pra estacionar tem que
 		colocar turn em move pra toda vez girar
@@ -72,15 +72,18 @@ void Spyder::turn(Point f){
 	else if(f.x - cephalo.c.x > 0) glRotatef(-angle, 0, 0, 1.0);
 	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0); */
 
-	
-	
+	if((cephalo.c.x - f.x) < 0){
+		 if(cephalo.c.y > abdomen.c.y) angle = -angle;
+	}else if(cephalo.c.x - f.x > 0){
+		 if(cephalo.c.y < abdomen.c.y) angle = -angle;
+	}
 	/* MEIO QUE TRANSLADANDO EIXO pra origem */
 	cephalo.c.x -= abdomen.c.x;
 	cephalo.c.y -= abdomen.c.y;
 	
 	float xT = cephalo.c.x;
-	cephalo.c.x =  xT * cos(angle) + cephalo.c.y * sin(angle);
-	cephalo.c.y =  -xT * sin(angle) + cephalo.c.y * cos(angle);
+	cephalo.c.x =  xT * cos(angle) - cephalo.c.y * sin(angle);
+	cephalo.c.y =  xT * sin(angle) + cephalo.c.y * cos(angle);
 	cephalo.c.x += abdomen.c.x;
 	cephalo.c.y += abdomen.c.y;
 	

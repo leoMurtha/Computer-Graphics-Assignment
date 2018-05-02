@@ -99,7 +99,8 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		p.x = x;
 		p.y = WINDOW_HEIGHT - y;
-
+		spyder.turn(p);
+		
 		// encontrando vetor direcao
 		dirVec.x = p.x - (spyder.getCephalo().c.x);
 		dirVec.y = p.y - (spyder.getCephalo().c.y);		
@@ -107,7 +108,7 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		float dirVecSize = sqrt((dirVec.x*dirVec.x)+(dirVec.y*dirVec.y));
 		dirVec.x /= dirVecSize;
 		dirVec.y /= dirVecSize;
-		spyder.turn(p);
+		
 	}
 	
 }
