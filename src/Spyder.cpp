@@ -60,24 +60,33 @@ Circle Spyder::getAbdomen(){
 /* Function called inside the move in case the there is a need for the spyder to move */ 
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
-	angle = angle*180/M_PI;
-	
-	glTranslatef(abdomen.c.x, abdomen.c.y, 0);
+	printf("angle %f %f\n", angle, 180*angle/M_PI);
+	/*glTranslatef(abdomen.c.x, abdomen.c.y, 0);
 	if(f.x - cephalo.c.x < 0) glRotatef(angle, 0, 0, 1.0);
 	else if(f.x - cephalo.c.x > 0) glRotatef(-angle, 0, 0, 1.0);
-	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0);
+	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0); */
+
+	if(f.x - cephalo.c.x > 0) angle = -angle;
+	cephalo.c.x -= abdomen.c.x;
+	cephalo.c.y -= abdomen.c.y;
+	
+	float xT = cephalo.c.x;
+	cephalo.c.x =  xT * cos(angle) - cephalo.c.y * sin(angle);
+	cephalo.c.y =  xT * sin(angle) + cephalo.c.y * cos(angle);
+	cephalo.c.x += abdomen.c.x;
+	cephalo.c.y += abdomen.c.y;
+	
 }
 
 void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
-	turn(p);
-
-
+	
 	// VETOR DE DIREÇÃO
 	if(dist(cephalo.c, p) > 1){
 		cephalo.c.x += dirVec.x*speed;
 		abdomen.c.x += dirVec.x*speed;
 		cephalo.c.y += dirVec.y*speed;
 		abdomen.c.y += dirVec.y*speed;
+		
 	}
 
 	initLegs();
