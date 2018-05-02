@@ -63,6 +63,7 @@ void display(){
   	
 	glPushMatrix();
 	
+	spyder.move(dirVec, p);
 	spyder.draw();
 	
 	glPopMatrix();
@@ -106,10 +107,6 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		float dirVecSize = sqrt((dirVec.x*dirVec.x)+(dirVec.y*dirVec.y));
 		dirVec.x /= dirVecSize;
 		dirVec.y /= dirVecSize;
-
-		spy
-		moved = true;
-		
 	}
 	
 }
