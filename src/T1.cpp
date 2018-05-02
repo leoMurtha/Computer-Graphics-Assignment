@@ -62,8 +62,7 @@ void display(){
   	glColor3f(0,0,0);
   	
 	glPushMatrix();
-	spyder.move(p);
-
+	
 	spyder.draw();
 	
 	glPopMatrix();
@@ -108,6 +107,7 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		dirVec.x /= dirVecSize;
 		dirVec.y /= dirVecSize;
 
+		spy
 		moved = true;
 		
 	}

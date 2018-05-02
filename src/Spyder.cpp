@@ -69,7 +69,7 @@ void Spyder::turn(Point f){
 }
 
 void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
-	turn(f);
+	turn(p);
 
 
 	// VETOR DE DIREÇÃO
@@ -82,12 +82,6 @@ void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
 
 	initLegs();
 
-	/*if(f.x - cephalo.c.x < 0) cephalo.c.x -= speed;
-	else if(f.x - cephalo.c.x > 0) cephalo.c.x += speed;
-	if(f.y - cephalo.c.y < 0) cephalo.c.y -= speed;
-	else if(f.y - cephalo.c.y > 0) cephalo.c.y += speed;*/
-
-	//updatePos();
 }
 
 /* Draws the entire spyder */
