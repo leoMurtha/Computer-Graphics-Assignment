@@ -23,7 +23,7 @@ class Spyder{
 		Circle getAbdomen();
 		void draw();
 		void initLegs();
-		void move(Point);
+		void move(Point,Point);
 		void turn(Point);
 		void updatePos();
 };

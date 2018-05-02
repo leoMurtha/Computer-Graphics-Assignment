@@ -12,7 +12,7 @@
 #include <Spyder.h>
 
 Spyder spyder = Spyder();
-Point p;
+Point p,dirVec;
 bool moved;
 
 float dot2D(Point A, Point B){
@@ -84,20 +84,23 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
   	glColor3f(0,0,0);
   	
-	glPushMatrix();
-	if(moved){
-		spyder.turn(p);
+	glPushMatrix();	
+	//if(moved){
+		spyder.turn(p);  
 		moved = false;
-		printf("asdsad\n");
-	}
+		printf("PONTO CLICADO = (%f,%f)\n", p.x,p.y);
+	//}
+	spyder.move(dirVec,p);
 	spyder.draw();
+
 	glPopMatrix();
 
-	spyder.move(p);
-    
-	/*glPushMatrix();
+
+
+	glPushMatrix();
 	line(spyder.getAbdomen().c, p);
-	glPopMatrix();*/
+	glPopMatrix();
+
 
   	glFlush();
   	glutPostRedisplay();
@@ -130,8 +133,16 @@ void update(int val){
 void mouse(GLint button, GLint state, GLint x, GLint y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		p.x = x;
-		p.y = WINDOW_HEIGHT - y;				
-		
+		p.y = WINDOW_HEIGHT - y;
+
+		// encontrando vetor direcao
+		dirVec.x = p.x - (spyder.getCephalo().c.x);
+		dirVec.y = p.y - (spyder.getCephalo().c.y);		
+		// normalizando
+		float dirVecSize = sqrt((dirVec.x*dirVec.x)+(dirVec.y*dirVec.y));
+		dirVec.x /= dirVecSize;
+		dirVec.y /= dirVecSize;
+
 		moved = true;
 		glutPostRedisplay();
 	}
@@ -140,6 +151,7 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 
 void idle(void){
 	glPushMatrix();
+
 	if(moved){
 		spyder.turn(p);
 		moved = false;
@@ -147,7 +159,8 @@ void idle(void){
 	}
 	glPopMatrix();
 
-	spyder.move(p);
+	//spyder.move(p);
+
     glutPostRedisplay();
 }
 

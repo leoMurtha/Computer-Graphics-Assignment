@@ -70,12 +70,26 @@ void Spyder::turn(Point f){
 	
 }
 
-void Spyder::move(Point f){
-	if(f.x - cephalo.c.x < 0) cephalo.c.x -= speed;
+void Spyder::move( Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
+
+
+
+	// VETOR DE DIREÇÃO
+	if(dist(cephalo.c, p) > 1){
+		cephalo.c.x += dirVec.x*speed;
+		abdomen.c.x += dirVec.x*speed;
+		cephalo.c.y += dirVec.y*speed;
+		abdomen.c.y += dirVec.y*speed;
+	}
+
+	initLegs();
+
+	/*if(f.x - cephalo.c.x < 0) cephalo.c.x -= speed;
 	else if(f.x - cephalo.c.x > 0) cephalo.c.x += speed;
 	if(f.y - cephalo.c.y < 0) cephalo.c.y -= speed;
-	else if(f.y - cephalo.c.y > 0) cephalo.c.y += speed;
-	updatePos();
+	else if(f.y - cephalo.c.y > 0) cephalo.c.y += speed;*/
+
+	//updatePos();
 }
 
 /* Draws the entire spyder */
