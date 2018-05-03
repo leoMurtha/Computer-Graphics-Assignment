@@ -33,20 +33,78 @@ void Spyder::updatePos(){
 }
 
 void Spyder::initLegs(){
-	/* Initializing the segments attached to the body */
-	float dT = M_PI/9;
-		for(int i = 0; i < 4; i++){
-			leftL[i].seg[0].x = cephalo.c.x + cephalo.r*cos(-((M_PI+dT) - dT*i));
-			leftL[i].seg[0].y = cephalo.c.y + cephalo.r*sin(-((M_PI+dT) - dT*i));
-			rightL[i].seg[0].x = cephalo.c.x + cephalo.r*cos(-((2*M_PI+dT) - dT*i));
-			rightL[i].seg[0].y = leftL[i].seg[0].y;
-			for(int j = 1; j < 3; j++){
-				leftL[i].seg[j].x = leftL[i].seg[0].x - ldX;
-				leftL[i].seg[j].y = leftL[i].seg[0].y - ldY*j;
-				rightL[i].seg[j].x = rightL[i].seg[0].x + ldX;
-				rightL[i].seg[j].y = rightL[i].seg[0].y - ldY*j;	 	
-			}
-		}
+// » Pernas direita 
+
+// Perna 1 - rightL[0]
+
+	rightL[0].seg[0].x = cephalo.c.x + (cephalo.r * cos(M_PI/3));
+	rightL[0].seg[0].y = cephalo.c.y + (cephalo.r * sin(M_PI/3));
+	
+	rightL[0].seg[1].x = rightL[0].seg[0].x + ldX*2 * cos(M_PI/2.5);
+	rightL[0].seg[1].y = rightL[0].seg[0].y + ldY*2 * sin(M_PI/2.5);
+	
+	rightL[0].seg[2].x = rightL[0].seg[1].x + ldX * cos(M_PI/3.5);
+	rightL[0].seg[2].y = rightL[0].seg[1].y + ldY * sin(M_PI/3.5);
+
+// Perna 2 e 3 - rightL[1] e rightL[2] (são identicas)
+
+	for(int i=1; i<3;i++){
+		rightL[i].seg[0].x = cephalo.c.x + cephalo.r * cos(M_PI/6 * (i-1));
+		rightL[i].seg[0].y = cephalo.c.y + cephalo.r * sin(M_PI/6 * (i-1));
+		
+		rightL[i].seg[1].x = rightL[i].seg[0].x + i*ldX/2 * cos(M_PI/4);
+		rightL[i].seg[1].y = rightL[i].seg[0].y + i*ldY/2 * sin(M_PI/4);
+		
+		rightL[i].seg[2].x = rightL[i].seg[1].x + ldX*2 * cos(19*M_PI/12);
+		rightL[i].seg[2].y = rightL[i].seg[1].y + ldY*2 * sin(19*M_PI/12);
+	}
+
+// Perna 4
+	rightL[3].seg[0].x = cephalo.c.x + (cephalo.r * cos(11*M_PI/6));
+	rightL[3].seg[0].y = cephalo.c.y + (cephalo.r * sin(11*M_PI/6));
+	
+	rightL[3].seg[1].x = rightL[3].seg[0].x + ldX/2 * cos(M_PI/4);
+	rightL[3].seg[1].y = rightL[3].seg[0].y + ldY/2 * sin(M_PI/4);
+	
+	rightL[3].seg[2].x = rightL[3].seg[1].x + ldX*4 * cos(19*M_PI/12);
+	rightL[3].seg[2].y = rightL[3].seg[1].y + ldY*4 * sin(19*M_PI/12);
+
+// » Pernas esquerdas
+
+// Perna 1 - leftL[0]
+
+	leftL[0].seg[0].x = cephalo.c.x - cephalo.r * cos(M_PI/3);
+	leftL[0].seg[0].y = cephalo.c.y + cephalo.r * sin(M_PI/3);
+	
+	leftL[0].seg[1].x = leftL[0].seg[0].x - ldX*2 * cos(M_PI/2.5);
+	leftL[0].seg[1].y = leftL[0].seg[0].y + ldY*2 * sin(M_PI/2.5);
+	
+	leftL[0].seg[2].x = leftL[0].seg[1].x - ldX * cos(M_PI/3.5);
+	leftL[0].seg[2].y = leftL[0].seg[1].y + ldY * sin(M_PI/3.5);
+
+// Perna 2 e 3 - leftL[1] e leftL[2] (são identicas)
+
+	for(int i=1; i<3;i++){
+		leftL[i].seg[0].x = cephalo.c.x - (cephalo.r * cos(M_PI/6 * (i-1)));
+		leftL[i].seg[0].y = cephalo.c.y + (cephalo.r * sin(M_PI/6 * (i-1)));
+		
+		leftL[i].seg[1].x = leftL[i].seg[0].x - i*ldX/2 * cos(M_PI/4);
+		leftL[i].seg[1].y = leftL[i].seg[0].y + i*ldY/2 * sin(M_PI/4);
+		
+		leftL[i].seg[2].x = leftL[i].seg[1].x - ldX*2 * cos(19*M_PI/12);
+		leftL[i].seg[2].y = leftL[i].seg[1].y + ldY*2 * sin(19*M_PI/12);
+	}
+
+// Perna 4
+	leftL[3].seg[0].x = cephalo.c.x - (cephalo.r * cos(11*M_PI/6));
+	leftL[3].seg[0].y = cephalo.c.y + (cephalo.r * sin(11*M_PI/6));
+	
+	leftL[3].seg[1].x = leftL[3].seg[0].x - ldX/2 * cos(M_PI/4);
+	leftL[3].seg[1].y = leftL[3].seg[0].y + ldY/2 * sin(M_PI/4);
+	
+	leftL[3].seg[2].x = leftL[3].seg[1].x - ldX*4 * cos(19*M_PI/12);
+	leftL[3].seg[2].y = leftL[3].seg[1].y + ldY*4 * sin(19*M_PI/12);
+
 }
 
 Circle Spyder::getCephalo(){
@@ -60,36 +118,36 @@ Circle Spyder::getAbdomen(){
 /* Function called inside the move in case the there is a need for the spyder to move */ 
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
-	angle = angle*180/M_PI;
 
-	printf("Angle : %f\n", angle);
+	// calculo da direcao de rotacao, horaria ou anti-horaria
+	float nz = ((cephalo.c.x-abdomen.c.x)*(f.y-cephalo.c.y)) - ((cephalo.c.y-abdomen.c.y)*(f.x-cephalo.c.x));
+	if(nz < 0.0f) angle = -angle;
+
+	/* MEIO QUE TRANSLADANDO EIXO pra origem */
+	cephalo.c.x -= abdomen.c.x;
+	cephalo.c.y -= abdomen.c.y;
 	
-	glTranslatef(abdomen.c.x, abdomen.c.y, 0);
-	glRotatef(angle, 0.0, 0.0, 1.0);
-	glTranslatef(-abdomen.c.x, -abdomen.c.y, 0);
+	float xT = cephalo.c.x;
+	cephalo.c.x =  xT * cos(angle) - cephalo.c.y * sin(angle);
+	cephalo.c.y =  xT * sin(angle) + cephalo.c.y * cos(angle);
+	cephalo.c.x += abdomen.c.x;
+	cephalo.c.y += abdomen.c.y;
 	
 }
 
-void Spyder::move( Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
-
-
-
+void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
 	// VETOR DE DIREÇÃO
 	if(dist(cephalo.c, p) > 1){
+
 		cephalo.c.x += dirVec.x*speed;
-		abdomen.c.x += dirVec.x*speed;
 		cephalo.c.y += dirVec.y*speed;
-		abdomen.c.y += dirVec.y*speed;
+
+		abdomen.c.x += dirVec.x*speed;
+		abdomen.c.y += dirVec.y*speed;		
 	}
-
+	
 	initLegs();
-
-	/*if(f.x - cephalo.c.x < 0) cephalo.c.x -= speed;
-	else if(f.x - cephalo.c.x > 0) cephalo.c.x += speed;
-	if(f.y - cephalo.c.y < 0) cephalo.c.y -= speed;
-	else if(f.y - cephalo.c.y > 0) cephalo.c.y += speed;*/
-
-	//updatePos();
+	
 }
 
 /* Draws the entire spyder */

@@ -25,35 +25,15 @@ float dist(Point i, Point f){
 
 float getAngle(Point a, Point b, Point c){
 	Point A,B;
+
 	A.x = b.x - a.x;
 	A.y = b.y - a.y;
+
 	B.x = c.x - a.x;
 	B.y = c.y - a.y;
 	return acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
 }
 
-/* Uses first point as base */
-void translate(Point *v, Point t, int n){
-	int dx = t.x - v[0].x;
-	int dy = t.y - v[0].y;
-
-	for(int i = 0; i < n; i++){
-		v[i].x += dx;
-		v[i].y += dy;
-	}
-}
-
-void scale(Point *v, float s, int n){
-	for(int i = 0; i < n; i++){
-		v[i].x *= s;
-		v[i].y *= s;
-	}
-}
-
-void rotate2(Point f, float angle){
-	//glMatrixMode(GL_MODELVIEW);
-	
-}
 
 void rotate(Point *v, float angle, int n){
 	for(int i = 0; i < n; i++){
@@ -79,32 +59,19 @@ void circle(Circle t){
 		glEnd();
 }
 
-
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
   	glColor3f(0,0,0);
   	
-	glPushMatrix();	
-	//if(moved){
-		spyder.turn(p);  
-		moved = false;
-		printf("PONTO CLICADO = (%f,%f)\n", p.x,p.y);
-	//}
-	spyder.move(dirVec,p);
-	spyder.draw();
-
-	glPopMatrix();
-
-
-
 	glPushMatrix();
-	line(spyder.getAbdomen().c, p);
+	
+	spyder.move(dirVec, p);
+	spyder.draw();
+	
 	glPopMatrix();
-
+	
 
   	glFlush();
-  	glutPostRedisplay();
-
 }
 
 void defaultInit(){
@@ -125,16 +92,13 @@ void defaultInit(){
 	gluOrtho2D(0, WINDOW_WIDTH, 0 , WINDOW_HEIGHT);
 }
 
-void update(int val){
-	glutTimerFunc(fps, update, 0); // Calls update again
-	glutPostRedisplay(); // Calls the display function again
-}
 
 void mouse(GLint button, GLint state, GLint x, GLint y){
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		p.x = x;
 		p.y = WINDOW_HEIGHT - y;
-
+		spyder.turn(p);
+		
 		// encontrando vetor direcao
 		dirVec.x = p.x - (spyder.getCephalo().c.x);
 		dirVec.y = p.y - (spyder.getCephalo().c.y);		
@@ -142,26 +106,14 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		float dirVecSize = sqrt((dirVec.x*dirVec.x)+(dirVec.y*dirVec.y));
 		dirVec.x /= dirVecSize;
 		dirVec.y /= dirVecSize;
-
-		moved = true;
-		glutPostRedisplay();
+		
 	}
 	
 }
 
-void idle(void){
-	glPushMatrix();
-
-	if(moved){
-		spyder.turn(p);
-		moved = false;
-		printf("asdsad\n");
-	}
-	glPopMatrix();
-
-	//spyder.move(p);
-
-    glutPostRedisplay();
+void update(int val){
+	glutTimerFunc(fps, update, 0); // Calls update again
+	glutPostRedisplay(); // Calls the display function again
 }
 
 int main(int argc, char *argv[]){
@@ -182,8 +134,7 @@ int main(int argc, char *argv[]){
 
 	glutMouseFunc(mouse);
 	glutDisplayFunc(display);
-	//glutIdleFunc(idle);
-
+	glutTimerFunc(fps, update, 0);
 	
 	glutMainLoop();
 
