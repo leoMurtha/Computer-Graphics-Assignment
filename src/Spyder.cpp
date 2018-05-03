@@ -10,27 +10,36 @@
 #include <string.h>
 #include <Spyder.h>
 #include <T1.h>
-#include <Geometrics.h>
 
 using namespace std;
 
 /* Creates a random spyder, can be changed later */
 Spyder::Spyder(){
+	// cephalo initial position and size
 	cephalo.r = 40;
 	cephalo.c.x = WINDOW_WIDTH/2;
 	cephalo.c.y = WINDOW_HEIGHT/2 + 120; 
+	// abdomen initial position and size relative to cephalo
 	abdomen.r = cephalo.r*2;
-
-	speed = 1.0f;
-	p2 = p3 = 0;
-	updatePos();
-}
-
-void Spyder::updatePos(){
 	abdomen.c.x = cephalo.c.x;
 	abdomen.c.y = cephalo.c.y - (abdomen.r+cephalo.r); 
+
+	speed = 1.0f;
+
+	// OQ SAO P2 E P3???
+	p2 = p3 = 0;
 	
 	initLegs();
+
+	//updatePos();
+}
+
+Circle Spyder::getCephalo(){
+	return cephalo;
+}
+
+Circle Spyder::getAbdomen(){
+	return abdomen;
 }
 
 void Spyder::initLegs(){
@@ -40,6 +49,7 @@ void Spyder::initLegs(){
 
 	rightL[0].seg[0].x = cephalo.c.x + (cephalo.r * cos(M_PI/3));
 	rightL[0].seg[0].y = cephalo.c.y + (cephalo.r * sin(M_PI/3));
+	
 	
 	rightL[0].seg[1].x = rightL[0].seg[0].x + ldX*2 * cos(M_PI/2.5);
 	rightL[0].seg[1].y = rightL[0].seg[0].y + ldY*2 * sin(M_PI/2.5);
@@ -108,22 +118,12 @@ void Spyder::initLegs(){
 
 }
 
-Circle Spyder::getCephalo(){
-	return cephalo;
-}
 
-Circle Spyder::getAbdomen(){
-	return abdomen;
-}
 
-/* Function called inside the move in case the there is a need for the spyder to move */ 
+// Rotates the body of the spider
 void Spyder::turn(Point f){
-	float angle = getAngle(abdomen.c, cephalo.c, f);
+	double angle = getAngle(abdomen.c, cephalo.c, f);
 	
-	// calculo da direcao de rotacao, horaria ou anti-horaria
-	float nz = ((cephalo.c.x-abdomen.c.x)*(f.y-cephalo.c.y)) - ((cephalo.c.y-abdomen.c.y)*(f.x-cephalo.c.x));
-	if(nz < 0.0f) angle = -angle;
-
 	cephalo.c = rotate(cephalo.c, abdomen.c, angle);
 
 	for(int i = 0; i < 4; i++){	
@@ -135,24 +135,9 @@ void Spyder::turn(Point f){
 	
 }
 
-void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
-	if(dist(cephalo.c, p) > 1){
-
-		cephalo.c.x += dirVec.x*speed;
-		cephalo.c.y += dirVec.y*speed;
-
-		abdomen.c.x += dirVec.x*speed;
-		abdomen.c.y += dirVec.y*speed;
-		for(int i = 0; i < 4; i++){	
-			for(int j = 0; j < 3; j++){
-			leftL[i].seg[j].x += dirVec.x*speed;
-			leftL[i].seg[j].y += dirVec.y*speed;
-			rightL[i].seg[j].x += dirVec.x*speed;
-			rightL[i].seg[j].y += dirVec.y*speed;			
-			}
-		}
-
-		if(p2 < 15){
+// makes legs move, simuletion the spider walking
+void Spyder::legsMovement(){
+	if(p2 < 15){
 			leftL[0].seg[1] = rotate(leftL[0].seg[1],leftL[0].seg[0], 0.1);
 			leftL[0].seg[2] = rotate(leftL[0].seg[2],leftL[0].seg[0], 0.1);
 			rightL[0].seg[1] = rotate(rightL[0].seg[1],rightL[0].seg[0], 0.1);
@@ -166,19 +151,49 @@ void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
 			rightL[0].seg[2] = rotate(rightL[0].seg[2],rightL[0].seg[0], -0.1);
 			
 			p3++;
-		}else p2 = p3 = 0;		
+	}else p2 = p3 = 0;		
+		
+}
+
+
+// makes all body parts of the spider move in the same direction
+void Spyder::move(Point dirVec, Point p){ 
+
+	// stops movement close to the destination point
+	if(dist(cephalo.c, p) > 1){
+
+		
+		// destini finding
+		Point dest;
+		dest.x = dirVec.x*speed;
+		dest.y = dirVec.y*speed;
+
+		// Body translation
+		cephalo.c = translation(cephalo.c,dest);
+		abdomen.c = translation(abdomen.c,dest);
+		// Legs translation
+		for(int i = 0; i < 4; i++){	
+			for(int j = 0; j < 3; j++){
+				leftL[i].seg[j] = translation(leftL[i].seg[j],dest);
+				rightL[i].seg[j] = translation(rightL[i].seg[j],dest);			
+			}
+		}
+
+		legsMovement();
+		
 	}
-	
-	
-	//initLegs();
 }
 
 /* Draws the entire spyder */
 void Spyder::draw(){
+
+	// body drawing
 	circle(abdomen);
 	circle(cephalo);
 
-	line(cephalo.c, abdomen.c);
+	//line(cephalo.c, abdomen.c);
+
+	// legs drawing
 	for(int i = 0; i < 4; i++){
 		line(leftL[i].seg[0], leftL[i].seg[1]);
 		line(leftL[i].seg[1], leftL[i].seg[2]);

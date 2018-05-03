@@ -29,6 +29,7 @@ class Spyder{
 		void move(Point,Point);
 		void turn(Point);
 		void updatePos();
+		void legsMovement();
 };
 
 #endif 

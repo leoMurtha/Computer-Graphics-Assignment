@@ -13,6 +13,4 @@ using namespace std;
 #define UP 101
 #define DWN 103
 
-
-
 #endif

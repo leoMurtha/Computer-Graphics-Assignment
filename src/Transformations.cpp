@@ -4,23 +4,39 @@
 #include <Transformations.h>
 
 
-
+// scalar product of two vectors
 float dot2D(Point A, Point B){
 	return (A.x)*(B.x) + (A.y)*(B.y);
 }
 
-float getAngle(Point a, Point b, Point c){
+// finding the angle between vectors A(a,b) and B(a,c)
+double getAngle(Point a, Point b, Point c){
 	Point A,B;
 
+	// Use of vector scalar product to find the angle
 	A.x = b.x - a.x;
 	A.y = b.y - a.y;
 
 	B.x = c.x - a.x;
 	B.y = c.y - a.y;
 
-	return acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
+	double angle = acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
+
+	// direction checkout
+	double nz = ((b.x-a.x)*(c.y-b.y)) - ((b.y-a.y)*(c.x-b.x));
+	if(nz < 0.0f) angle = -angle;
+
+	return angle;
 }
 
+
+// Translates point a with offsets of vector v
+Point translation(Point a, Point v){
+	Point b;
+	b.x = a.x + v.x;
+	b.y = a.y + v.y;
+	return b;
+}
 
 // Makes the rotation of an axis formed by two dots, u and v
 Point rotate(Point v, Point u, float angle){

@@ -1,20 +1,23 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <cstdlib>
-#include <iostream>
-#include <math.h>
 #include <GL/glut.h>
-#include <limits.h>
-#include <string>
-#include <vector>
-#include <string.h>
 #include <T1.h>
 #include <Spyder.h>
 #include <Transformations.h>
-#include <Geometrics.h>
+
+// BIBLIOTECAS QUE PARECEM NAO SER USADAS ( EXCLUIR DEPOIS )
+//#include <cstdlib>
+//#include <iostream>
+//#include <math.h>
+//#include <limits.h>
+//#include <string>
+//#include <vector>
+//#include <string.h>
+// =========================================================
+
 
 Spyder spyder = Spyder();
-Point p,dirVec;
+Point destPoint,dirVec;
 bool moved, mouseClicked = false;
 
 
@@ -26,15 +29,15 @@ void display(){
 
   	if(mouseClicked){
   		// rotates the spyder
-		spyder.turn(p);
+		spyder.turn(destPoint);
 		
 		// find new movement direction
-		dirVec = createNormalizedVector(spyder.getCephalo().c,p);
+		dirVec = createNormalizedVector(spyder.getCephalo().c,destPoint);
 
 		mouseClicked = false;
 	}
 
-	spyder.move(dirVec, p);
+	spyder.move(dirVec, destPoint);
 	spyder.draw();
 	
 
@@ -47,9 +50,9 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 	// Makes destination alterations for mouse left button clicks
 	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
 		// resets the spider destination
-		p.x = x;
-		p.y = WINDOW_HEIGHT - y;
-		// 
+		destPoint.x = x;
+		destPoint.y = WINDOW_HEIGHT - y;
+		// inform that mouse has a new dest
 		mouseClicked = true;
 	}
 	
@@ -74,9 +77,13 @@ void defaultInit(){
 	glLineWidth(3); 
 	glEnable(GL_LINE_SMOOTH);
 	
-	p.x = WINDOW_WIDTH/2;
-	p.y = WINDOW_HEIGHT/2 + 120;	
-	moved = false;
+	destPoint.x = WINDOW_WIDTH/2;
+	destPoint.y = WINDOW_HEIGHT/2 + 120;	
+
+
+	//moved = false;  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REMOVER
+
+
 	// define a 2D orthographic projection matrix
 	gluOrtho2D(0, WINDOW_WIDTH, 0 , WINDOW_HEIGHT);
 }

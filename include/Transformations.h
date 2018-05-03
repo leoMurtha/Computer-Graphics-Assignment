@@ -5,9 +5,10 @@ using namespace std;
 
 #include <Geometrics.h>
 
+Point translation(Point , Point);
 
 Point rotate(Point, Point,float);
 
-float getAngle(Point, Point, Point);
+double getAngle(Point, Point, Point);
 
 #endif
