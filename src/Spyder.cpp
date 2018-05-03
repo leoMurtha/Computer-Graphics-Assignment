@@ -15,6 +15,7 @@ using namespace std;
 
 /* Creates a random spyder, can be changed later */
 Spyder::Spyder(){
+	ldX = 50.0f, ldY = 30.0f;
 	// cephalo initial position and size
 	cephalo.r = 40;
 	cephalo.c.x = WINDOW_WIDTH/2;
@@ -31,12 +32,9 @@ Spyder::Spyder(){
 
 	speed = 1.0f;
 
-	// OQ SAO P2 E P3???
-	p2 = p3 = 0;
+	p4 = p2 = p3 = 0;
 	
 	initLegs();
-
-	//updatePos();
 }
 
 Circle Spyder::getCephalo(){
@@ -143,7 +141,6 @@ void legM(Leg *l, float angle1, float angle2){
 	l->seg[1] = rotate(l->seg[1],l->seg[0], angle1);
 	l->seg[2] = rotate(l->seg[2],l->seg[0], angle1);
 	l->seg[2] = rotate(l->seg[2],l->seg[1], angle2);
-	
 	l->seg[1] = rotate(l->seg[1],l->seg[0], angle1);
 	l->seg[2] = rotate(l->seg[2],l->seg[1], angle2);
 
@@ -154,8 +151,8 @@ void legsM(Leg *l,float dir){
 	legM(&(l[0]),dir*0.03,dir*0.01);
 	legM(&(l[2]),dir*(-0.01),dir*(-0.005));
 
-	legM(&(l[1]),dir*0.01,dir*0.005);
-	legM(&(l[3]),dir*(-0.03),dir*(-0.01));
+	legM(&(l[1]),dir*(-0.01),dir*(0.008));
+	legM(&(l[3]),dir*(-0.003),dir*(-0.003));
 
 }
 
@@ -260,9 +257,6 @@ void Spyder::draw(){
 	//eyes
 	filledCircle(eye[0], false);
 	filledCircle(eye[1], false);
-
-	//line(cephalo.c, abdomen.c);
-
 	
 }
 

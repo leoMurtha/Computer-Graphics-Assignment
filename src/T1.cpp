@@ -5,21 +5,9 @@
 #include <Spyder.h>
 #include <Transformations.h>
 
-// BIBLIOTECAS QUE PARECEM NAO SER USADAS ( EXCLUIR DEPOIS )
-//#include <cstdlib>
-//#include <iostream>
-//#include <math.h>
-//#include <limits.h>
-//#include <string>
-//#include <vector>
-//#include <string.h>
-// =========================================================
-
-
 Spyder spyder = Spyder();
 Point destPoint,dirVec;
-bool moved, mouseClicked = false;
-
+bool mouseClicked = false;
 
 // Display all drawings and atualizations on the screen
 void display(){
@@ -59,12 +47,10 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 	
 }
 
-
 void update(int val){
 	glutTimerFunc(fps, update, 0); // Calls update again
 	glutPostRedisplay(); // Calls the display function again
 }
-
 
 // Initiates the screen 
 void defaultInit(){
