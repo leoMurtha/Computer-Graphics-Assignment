@@ -20,6 +20,8 @@ float dist(Point, Point);
 
 void circle(Circle);
 
+void filledCircle(Circle, bool);
+
 void line(Point, Point);
 
 
