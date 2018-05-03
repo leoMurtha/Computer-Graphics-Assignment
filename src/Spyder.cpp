@@ -24,6 +24,11 @@ Spyder::Spyder(){
 	abdomen.c.x = cephalo.c.x;
 	abdomen.c.y = cephalo.c.y - (abdomen.r+cephalo.r); 
 
+	eye[0].r = eye[1].r = cephalo.r / 8;
+	eye[0].c.x = cephalo.c.x - cephalo.r/3;
+	eye[1].c.x = cephalo.c.x + cephalo.r/3;
+	eye[0].c.y = eye[1].c.y = cephalo.c.y + cephalo.r/2.5;
+
 	speed = 1.0f;
 
 	// OQ SAO P2 E P3???
@@ -118,15 +123,14 @@ void Spyder::initLegs(){
 
 }
 
-
-
 // Rotates the body of the spider
 void Spyder::turn(Point f){
 	double angle = getAngle(abdomen.c, cephalo.c, f);
 	
 	cephalo.c = rotate(cephalo.c, abdomen.c, angle);
 
-	for(int i = 0; i < 4; i++){	
+	for(int i = 0; i < 4; i++){
+		if(i < 2) eye[i].c = rotate(eye[i].c, abdomen.c, angle);
 		for(int j = 0; j < 3; j++){
 			leftL[i].seg[j] = rotate(leftL[i].seg[j], abdomen.c, angle);
 			rightL[i].seg[j] = rotate(rightL[i].seg[j], abdomen.c, angle);
@@ -134,9 +138,6 @@ void Spyder::turn(Point f){
 	}
 	
 }
-
-
-
 
 void legM(Leg *l, float angle1, float angle2){
 	l->seg[1] = rotate(l->seg[1],l->seg[0], angle1);
@@ -156,7 +157,6 @@ void legsM(Leg *l,float dir){
 
 // makes legs move, simulating the spider walking
 void Spyder::legsMovement(){
-	
 	if(p2 < 20){
 		legsM(rightL,1.0);
 		legsM(leftL,1.0);			
@@ -166,7 +166,7 @@ void Spyder::legsMovement(){
 		legsM(leftL,-1.0);			
 		p3++;
 	}else p2 = p3 = 0;		
-		
+
 }
 
 void Spyder::legRest(){
@@ -217,6 +217,7 @@ void Spyder::move(Point dirVec, Point p){
 		abdomen.c = translation(abdomen.c,dest);
 		// Legs translation
 		for(int i = 0; i < 4; i++){	
+			if(i < 2) eye[i].c = translation(eye[i].c, dest);
 			for(int j = 0; j < 3; j++){
 				leftL[i].seg[j] = translation(leftL[i].seg[j],dest);
 				rightL[i].seg[j] = translation(rightL[i].seg[j],dest);			
@@ -231,13 +232,7 @@ void Spyder::move(Point dirVec, Point p){
 
 /* Draws the entire spyder */
 void Spyder::draw(){
-
-	// body drawing
-	circle(abdomen);
-	circle(cephalo);
-
-	//line(cephalo.c, abdomen.c);
-
+	
 	// legs drawing
 	for(int i = 0; i < 4; i++){
 		line(leftL[i].seg[0], leftL[i].seg[1]);
@@ -246,5 +241,17 @@ void Spyder::draw(){
 		line(rightL[i].seg[1], rightL[i].seg[2]);
 	}
 
+	// body drawing
+	filledCircle(abdomen,true);
+	circle(abdomen);
+	filledCircle(cephalo,true);
+	circle(cephalo);
+	//eyes
+	filledCircle(eye[0], false);
+	filledCircle(eye[1], false);
+
+	//line(cephalo.c, abdomen.c);
+
+	
 }
 

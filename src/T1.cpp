@@ -81,10 +81,6 @@ void defaultInit(){
 	destPoint.x = WINDOW_WIDTH/2;
 	destPoint.y = WINDOW_HEIGHT/2 + 120;	
 
-
-	//moved = false;  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REMOVER
-
-
 	// define a 2D orthographic projection matrix
 	gluOrtho2D(0, WINDOW_WIDTH, 0 , WINDOW_HEIGHT);
 }

@@ -12,7 +12,7 @@ typedef struct {
 /* Spyder class its atributes and methods */
 class Spyder{
 	private:	
-		Circle cephalo, abdomen;
+		Circle cephalo, abdomen, eye[2];
 		float speed;
 		int p2 = 0,p3 = 0;
 		Leg leftL[4], rightL[4];
