@@ -135,8 +135,9 @@ void Spyder::turn(Point f){
 	
 }
 
-// makes legs move, simuletion the spider walking
+// makes legs move, simulating the spider walking
 void Spyder::legsMovement(){
+	
 	if(p2 < 15){
 			leftL[0].seg[1] = rotate(leftL[0].seg[1],leftL[0].seg[0], 0.1);
 			leftL[0].seg[2] = rotate(leftL[0].seg[2],leftL[0].seg[0], 0.1);
@@ -180,7 +181,7 @@ void Spyder::move(Point dirVec, Point p){
 		}
 
 		legsMovement();
-		
+
 	}
 }
 
