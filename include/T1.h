@@ -3,6 +3,8 @@
 
 using namespace std;
 
+#include <Transformations.h>
+
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 800
 #define fps 100/6
@@ -10,31 +12,7 @@ using namespace std;
 #define S 115
 #define UP 101
 #define DWN 103
-#define lines 1000
 
-typedef struct {
-	float x,y;
-}Point;
 
-typedef struct {
-	Point c;
-	float r;
-}Circle;
-
-void circle(Circle);
-
-void line(Point, Point);
-
-float dist(Point, Point);
-
-void translate(Point*, Point, int);
-
-void scale(Point*, float, int);
-
-Point rotate(Point, Point,float);
-
-void rotate2(Point, float);
-
-float getAngle(Point, Point, Point);
 
 #endif

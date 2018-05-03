@@ -10,64 +10,30 @@
 #include <string.h>
 #include <T1.h>
 #include <Spyder.h>
+#include <Transformations.h>
+#include <Geometrics.h>
 
 Spyder spyder = Spyder();
 Point p,dirVec;
-bool moved;
+bool moved, mouseClicked = false;
 
-float dot2D(Point A, Point B){
-	return (A.x)*(B.x) + (A.y)*(B.y);
-}
 
-float dist(Point i, Point f){
-	return sqrt(pow((i.x - f.x),2) + pow((i.y - f.y),2));
-}
-
-float getAngle(Point a, Point b, Point c){
-	Point A,B;
-
-	A.x = b.x - a.x;
-	A.y = b.y - a.y;
-
-	B.x = c.x - a.x;
-	B.y = c.y - a.y;
-	return acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
-}
-
-Point rotate(Point v, Point u, float angle){
-	v.x -= u.x;
-	v.y -= u.y;
-
-		double xT = v.x;
-		v.x = v.x*cos(angle) - v.y*sin(angle);
-		v.y = xT*sin(angle) + v.y*cos(angle);
-		
-	v.x += u.x;
-	v.y += u.y;
-	
-	return v;
-}
-
-void line(Point p1, Point p2){
-	glLineWidth(3);
-	glColor3f(1,0,0);
-	glBegin(GL_LINES);
-	glVertex3f(p1.x, p1.y, 0);
-	glVertex3f(p2.x, p2.y, 0);
-	glEnd();
-}
-
-void circle(Circle t){
-	double thetha = 0;
-		glBegin(GL_LINE_STRIP);
-		for(int i = 0; i <= lines; i++, thetha = (2*M_PI*i)/lines) glVertex2f(t.c.x + t.r*cos(thetha), t.c.y + t.r*sin(thetha));		
-		glEnd();
-}
-
+// Display all drawings and atualizations on the screen
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
   	glColor3f(0,0,0);
   	  	
+
+  	if(mouseClicked){
+  		// rotates the spyder
+		spyder.turn(p);
+		
+		// find new movement direction
+		dirVec = createNormalizedVector(spyder.getCephalo().c,p);
+
+		mouseClicked = false;
+	}
+
 	spyder.move(dirVec, p);
 	spyder.draw();
 	
@@ -75,6 +41,28 @@ void display(){
   	glFlush();
 }
 
+// Check for mouse input
+void mouse(GLint button, GLint state, GLint x, GLint y){
+
+	// Makes destination alterations for mouse left button clicks
+	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
+		// resets the spider destination
+		p.x = x;
+		p.y = WINDOW_HEIGHT - y;
+		// 
+		mouseClicked = true;
+	}
+	
+}
+
+
+void update(int val){
+	glutTimerFunc(fps, update, 0); // Calls update again
+	glutPostRedisplay(); // Calls the display function again
+}
+
+
+// Initiates the screen 
 void defaultInit(){
 	// Sets the color thar glClear will 'paint' in RGBA
 	glClearColor(1.0, 1.0, 1.0, 1.0);
@@ -94,30 +82,8 @@ void defaultInit(){
 }
 
 
-void mouse(GLint button, GLint state, GLint x, GLint y){
-	if(button == GLUT_LEFT_BUTTON && state == GLUT_DOWN){
-		p.x = x;
-		p.y = WINDOW_HEIGHT - y;
-		spyder.turn(p);
-		
-		// encontrando vetor direcao
-		dirVec.x = p.x - (spyder.getCephalo().c.x);
-		dirVec.y = p.y - (spyder.getCephalo().c.y);		
-		// normalizando
-		float dirVecSize = sqrt((dirVec.x*dirVec.x)+(dirVec.y*dirVec.y));
-		dirVec.x /= dirVecSize;
-		dirVec.y /= dirVecSize;
-		
-	}
-	
-}
-
-void update(int val){
-	glutTimerFunc(fps, update, 0); // Calls update again
-	glutPostRedisplay(); // Calls the display function again
-}
-
 int main(int argc, char *argv[]){
+
 	// Start up the glut	
 	glutInit(&argc, argv);
 	// Info for openGL about the screen/buffers this case 2D

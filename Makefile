@@ -1,5 +1,5 @@
 all:
-	@g++ -o T1 src/T1.cpp src/Spyder.cpp -I./include -g -Wall -lglut -lGLU -lGL -lm -std=c++11	
+	@g++ -o T1 src/T1.cpp src/Spyder.cpp src/Transformations.cpp src/Geometrics.cpp -I./include -g -Wall -lglut -lGLU -lGL -lm -std=c++11	
 run:
 	@./T1
 frun:

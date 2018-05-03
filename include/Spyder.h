@@ -2,6 +2,8 @@
 #define _SPYDER_H_
 
 #include <T1.h>
+#include <Transformations.h>
+#include <Geometrics.h>
 
 typedef struct {
 	Point seg[3]; /* Leg has two segments */ 
