@@ -108,11 +108,6 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		dirVec.x /= dirVecSize;
 		dirVec.y /= dirVecSize;
 		
-<<<<<<< HEAD
-=======
-		moved = true;
-		
->>>>>>> leuuu
 	}
 	
 }
