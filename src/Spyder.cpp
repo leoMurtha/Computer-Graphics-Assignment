@@ -119,7 +119,6 @@ void Spyder::initLegs(){
 }
 
 
-
 // Rotates the body of the spider
 void Spyder::turn(Point f){
 	double angle = getAngle(abdomen.c, cephalo.c, f);
@@ -134,8 +133,6 @@ void Spyder::turn(Point f){
 	}
 	
 }
-
-
 
 
 void legM(Leg *l, float angle1, float angle2){
@@ -182,16 +179,24 @@ void Spyder::legRest(){
 		p3++;	
 	}
 
+	while(p4>0){
+		legsM(rightL,1.0);
+		legsM(leftL,1.0);
+		p4--;
+	}	
+	
+
 	resting = true;	
 
 }
 
 void Spyder::legStartMov(){
 
-	for(int i=0; i<5; i++){
-		legsM(rightL,1.0);
-		legsM(leftL,1.0);
-	}
+	while(p4<10){
+		legsM(rightL,-1.0);
+		legsM(leftL,-1.0);
+		p4++;
+	}		
 
 	resting = false;
 }
@@ -203,10 +208,8 @@ void Spyder::move(Point dirVec, Point p){
 	// stops movement close to the destination point
 	if(dist(cephalo.c, p) > 1){
 
-		//if(resting){
-		//	legStartMov();
+		if(resting) legStartMov();
 
-		//}
 		// destini finding
 		Point dest;
 		dest.x = dirVec.x*speed;
@@ -215,6 +218,7 @@ void Spyder::move(Point dirVec, Point p){
 		// Body translation
 		cephalo.c = translation(cephalo.c,dest);
 		abdomen.c = translation(abdomen.c,dest);
+
 		// Legs translation
 		for(int i = 0; i < 4; i++){	
 			for(int j = 0; j < 3; j++){

@@ -14,7 +14,7 @@ class Spyder{
 	private:	
 		Circle cephalo, abdomen;
 		float speed;
-		int p2 = 0,p3 = 0;
+		int p2 = 0,p3 = 0,p4 = 0;
 		Leg leftL[4], rightL[4];
 		float ldX = 50.0f, ldY = 30.0f;
 		bool resting = true;
