@@ -118,35 +118,52 @@ Circle Spyder::getAbdomen(){
 /* Function called inside the move in case the there is a need for the spyder to move */ 
 void Spyder::turn(Point f){
 	float angle = getAngle(abdomen.c, cephalo.c, f);
-
 	// calculo da direcao de rotacao, horaria ou anti-horaria
 	float nz = ((cephalo.c.x-abdomen.c.x)*(f.y-cephalo.c.y)) - ((cephalo.c.y-abdomen.c.y)*(f.x-cephalo.c.x));
 	if(nz < 0.0f) angle = -angle;
 
-	/* MEIO QUE TRANSLADANDO EIXO pra origem */
-	cephalo.c.x -= abdomen.c.x;
+	/* Translating Spider axis to the origin */
+	/*cephalo.c.x -= abdomen.c.x;
 	cephalo.c.y -= abdomen.c.y;
 	
 	float xT = cephalo.c.x;
 	cephalo.c.x =  xT * cos(angle) - cephalo.c.y * sin(angle);
 	cephalo.c.y =  xT * sin(angle) + cephalo.c.y * cos(angle);
 	cephalo.c.x += abdomen.c.x;
-	cephalo.c.y += abdomen.c.y;
+	cephalo.c.y += abdomen.c.y;*/
+
+	cephalo.c = rotate(cephalo.c, abdomen.c, angle);
+
+	for(int i = 0; i < 4; i++){	
+		for(int j = 0; j < 3; j++){
+			leftL[i].seg[j] = rotate(leftL[i].seg[j], abdomen.c, angle);
+			rightL[i].seg[j] = rotate(rightL[i].seg[j], abdomen.c, angle);
+		}
+	}
 	
 }
 
 void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
-	// VETOR DE DIREÇÃO
 	if(dist(cephalo.c, p) > 1){
 
 		cephalo.c.x += dirVec.x*speed;
 		cephalo.c.y += dirVec.y*speed;
 
 		abdomen.c.x += dirVec.x*speed;
-		abdomen.c.y += dirVec.y*speed;		
+		abdomen.c.y += dirVec.y*speed;
+		for(int i = 0; i < 4; i++){	
+			for(int j = 0; j < 3; j++){
+			leftL[i].seg[j].x += dirVec.x*speed;
+			leftL[i].seg[j].y += dirVec.y*speed;
+			rightL[i].seg[j].x += dirVec.x*speed;
+			rightL[i].seg[j].y += dirVec.y*speed;
+			
+			
+			}
+		}		
 	}
 	
-	initLegs();
+	//initLegs();
 	
 }
 

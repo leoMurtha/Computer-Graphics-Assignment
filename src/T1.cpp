@@ -35,12 +35,18 @@ float getAngle(Point a, Point b, Point c){
 }
 
 
-void rotate(Point *v, float angle, int n){
-	for(int i = 0; i < n; i++){
-		double xT = v[i].x;
-		v[i].x = v[i].x*cos(angle) - v[i].y*sin(angle);
-		v[i].y = xT*sin(angle) + v[i].y*cos(angle);
-	}
+Point rotate(Point v, Point u, float angle){
+	v.x -= u.x;
+	v.y -= u.y;
+
+		double xT = v.x;
+		v.x = v.x*cos(angle) - v.y*sin(angle);
+		v.y = xT*sin(angle) + v.y*cos(angle);
+		
+	v.x += u.x;
+	v.y += u.y;
+	
+	return v;
 }
 
 void line(Point p1, Point p2){
@@ -63,12 +69,10 @@ void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
   	glColor3f(0,0,0);
   	
-	glPushMatrix();
-	
+  	
 	spyder.move(dirVec, p);
 	spyder.draw();
 	
-	glPopMatrix();
 	
 
   	glFlush();

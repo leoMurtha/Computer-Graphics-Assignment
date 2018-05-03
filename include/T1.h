@@ -31,7 +31,7 @@ void translate(Point*, Point, int);
 
 void scale(Point*, float, int);
 
-void rotate(Point *, float, int);
+Point rotate(Point, Point,float);
 
 void rotate2(Point, float);
 
