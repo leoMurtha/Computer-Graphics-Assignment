@@ -38,6 +38,19 @@ Point translation(Point a, Point v){
 	return b;
 }
 
+Point scale(Point v, Point u, float s){
+	v.x -= u.x;
+	v.y -= u.y;
+
+	v.x = v.x*s;
+	v.y = v.y*s;
+		
+	v.x += u.x;
+	v.y += u.y;
+	
+	return v;
+}
+
 // Makes the rotation of an axis formed by two dots, u and v
 Point rotate(Point v, Point u, float angle){
 

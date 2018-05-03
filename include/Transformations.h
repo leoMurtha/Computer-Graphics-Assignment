@@ -9,6 +9,8 @@ Point translation(Point , Point);
 
 Point rotate(Point, Point,float);
 
+Point scale(Point, Point, float);
+
 double getAngle(Point, Point, Point);
 
 #endif
