@@ -135,35 +135,78 @@ void Spyder::turn(Point f){
 	
 }
 
+
+
+
+void legM(Leg *l, float angle1, float angle2){
+	l->seg[1] = rotate(l->seg[1],l->seg[0], angle1);
+	l->seg[2] = rotate(l->seg[2],l->seg[0], angle1);
+	l->seg[2] = rotate(l->seg[2],l->seg[1], angle2);
+}
+
+void legsM(Leg *l,float dir){
+
+	legM(&(l[0]),dir*0.03,dir*0.01);
+	legM(&(l[2]),dir*(-0.01),dir*(-0.005));
+
+	legM(&(l[1]),dir*0.01,dir*0.005);
+	legM(&(l[3]),dir*(-0.03),dir*(-0.01));
+
+}
+
 // makes legs move, simulating the spider walking
 void Spyder::legsMovement(){
 	
-	if(p2 < 15){
-			leftL[0].seg[1] = rotate(leftL[0].seg[1],leftL[0].seg[0], 0.1);
-			leftL[0].seg[2] = rotate(leftL[0].seg[2],leftL[0].seg[0], 0.1);
-			rightL[0].seg[1] = rotate(rightL[0].seg[1],rightL[0].seg[0], 0.1);
-			rightL[0].seg[2] = rotate(rightL[0].seg[2],rightL[0].seg[0], 0.1);
-			
-			p2++;
-		}else if(p3 < 15){
-			leftL[0].seg[1] = rotate(leftL[0].seg[1],leftL[0].seg[0], -0.1);
-			leftL[0].seg[2] = rotate(leftL[0].seg[2],leftL[0].seg[0], -0.1);
-			rightL[0].seg[1] = rotate(rightL[0].seg[1],rightL[0].seg[0], -0.1);
-			rightL[0].seg[2] = rotate(rightL[0].seg[2],rightL[0].seg[0], -0.1);
-			
-			p3++;
+	if(p2 < 20){
+		legsM(rightL,1.0);
+		legsM(leftL,1.0);			
+		p2++;
+	}else if(p3 < 20){
+		legsM(rightL,-1.0);	
+		legsM(leftL,-1.0);			
+		p3++;
 	}else p2 = p3 = 0;		
 		
+}
+
+void Spyder::legRest(){
+
+	while(p2 < 20){
+		legsM(rightL,1.0);
+		legsM(leftL,1.0);
+		p2++;	
+	}
+	while(p3 < 20){
+		legsM(rightL,-1.0);
+		legsM(leftL,-1.0);
+		p3++;	
+	}
+
+	resting = true;	
+
+}
+
+void Spyder::legStartMov(){
+
+	for(int i=0; i<5; i++){
+		legsM(rightL,1.0);
+		legsM(leftL,1.0);
+	}
+
+	resting = false;
 }
 
 
 // makes all body parts of the spider move in the same direction
 void Spyder::move(Point dirVec, Point p){ 
-
+	
 	// stops movement close to the destination point
 	if(dist(cephalo.c, p) > 1){
 
-		
+		//if(resting){
+		//	legStartMov();
+
+		//}
 		// destini finding
 		Point dest;
 		dest.x = dirVec.x*speed;
@@ -182,7 +225,8 @@ void Spyder::move(Point dirVec, Point p){
 
 		legsMovement();
 
-	}
+	}else legRest();
+
 }
 
 /* Draws the entire spyder */

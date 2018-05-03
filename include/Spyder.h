@@ -14,10 +14,13 @@ class Spyder{
 	private:	
 		Circle cephalo, abdomen;
 		float speed;
-		int p2,p3;
+		int p2 = 0,p3 = 0;
 		Leg leftL[4], rightL[4];
 		float ldX = 50.0f, ldY = 30.0f;
+		bool resting = true;
+
 	public:
+		bool moving = false;
 		Spyder(); 
 		//~Wizard();
 		void setBody(Circle, Circle);
@@ -30,6 +33,8 @@ class Spyder{
 		void turn(Point);
 		void updatePos();
 		void legsMovement();
+		void legRest();
+		void legStartMov();
 };
 
 #endif 

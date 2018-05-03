@@ -38,6 +38,7 @@ void display(){
 	}
 
 	spyder.move(dirVec, destPoint);
+	if(spyder.moving) spyder.legsMovement();
 	spyder.draw();
 	
 
