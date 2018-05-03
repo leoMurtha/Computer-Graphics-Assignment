@@ -34,7 +34,6 @@ float getAngle(Point a, Point b, Point c){
 	return acos(dot2D(A,B)/(dist(b,a)*dist(c,a)));
 }
 
-
 Point rotate(Point v, Point u, float angle){
 	v.x -= u.x;
 	v.y -= u.y;
@@ -68,11 +67,9 @@ void circle(Circle t){
 void display(){
 	glClear(GL_COLOR_BUFFER_BIT);
   	glColor3f(0,0,0);
-  	
-  	
+  	  	
 	spyder.move(dirVec, p);
 	spyder.draw();
-	
 	
 
   	glFlush();
@@ -111,6 +108,11 @@ void mouse(GLint button, GLint state, GLint x, GLint y){
 		dirVec.x /= dirVecSize;
 		dirVec.y /= dirVecSize;
 		
+<<<<<<< HEAD
+=======
+		moved = true;
+		
+>>>>>>> leuuu
 	}
 	
 }

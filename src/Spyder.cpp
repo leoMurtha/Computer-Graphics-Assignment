@@ -164,7 +164,6 @@ void Spyder::move(Point dirVec, Point p){ // FAZER MOVIMENTO POR VETOR
 	}
 	
 	//initLegs();
-	
 }
 
 /* Draws the entire spyder */
