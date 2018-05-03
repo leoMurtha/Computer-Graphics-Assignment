@@ -143,6 +143,10 @@ void legM(Leg *l, float angle1, float angle2){
 	l->seg[1] = rotate(l->seg[1],l->seg[0], angle1);
 	l->seg[2] = rotate(l->seg[2],l->seg[0], angle1);
 	l->seg[2] = rotate(l->seg[2],l->seg[1], angle2);
+	
+	l->seg[1] = rotate(l->seg[1],l->seg[0], angle1);
+	l->seg[2] = rotate(l->seg[2],l->seg[1], angle2);
+
 }
 
 void legsM(Leg *l,float dir){
