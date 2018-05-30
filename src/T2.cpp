@@ -41,15 +41,42 @@ void display(){
 	glEnable(GL_DEPTH_TEST);
     glClear(GL_DEPTH_BUFFER_BIT);
     
-    //Red color used to draw.
-    glColor3f(1.0, 0.0, 0.0); 
+	// Red color used to draw.
+    glColor3f(1, 0, 0); 
+    
+    /* Por cima em Y */
     glPushMatrix();
+    glViewport(0, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    glLoadIdentity();
+    gluLookAt(0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0);
+    glutSolidSphere();
+    glPopMatrix();
+
+    /* De lado por X */
+    glPushMatrix();
+    glViewport(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    glLoadIdentity();
+    gluLookAt(5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glutWireTeapot(0.5);
+    glPopMatrix();
+
+    /* Na frente da cena por Z */ 
+    glPushMatrix();
+    glViewport(0, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
     gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    translate();
-    glutSolidSphere(1,100,10);
-    glPopMatrix();	
+    glutWireTeapot(0.5);
+    glPopMatrix();
 
+    /* Aleatório */
+    glPushMatrix();
+    glViewport(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
+    glLoadIdentity();
+    gluLookAt(3.0, 2.0, 10.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
+    glutWireTeapot(0.5);
+    glPopMatrix();
+
+	/*Dispara os comandos APENAS uma vez */
   	glFlush();
 }
 
@@ -71,7 +98,7 @@ void update(int val){
 // Initiates the screen 
 void defaultInit(){
 	// Sets the color thar glClear will 'paint' in RGBA
-	glClearColor(.3, .3, .3, .3);
+	glClearColor(1, 1, 1, 1);
 	// Sets the matrix with projection wich will do alot of matrix operations
 	glMatrixMode(GL_PROJECTION); // signal that I want to work with the projection stack
 	glLoadIdentity(); // make sure that the projection stack doesn't already have anything on it
