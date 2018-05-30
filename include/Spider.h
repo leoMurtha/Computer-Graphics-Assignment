@@ -1,7 +1,7 @@
-#ifndef _SPYDER_H_
-#define _SPYDER_H_
+#ifndef _SPiDER_H_
+#define _SPiDER_H_
 
-#include <T1.h>
+#include <T2.h>
 #include <Transformations.h>
 #include <Geometrics.h>
 
@@ -9,8 +9,8 @@ typedef struct {
 	Point seg[3]; /* Leg has two segments */ 
 }Leg;
 
-/* Spyder class its atributes and methods */
-class Spyder{
+/* Spider class its atributes and methods */
+class Spider{
 	private:	
 		Circle cephalo, abdomen, eye[2];
 		float speed;
@@ -21,7 +21,7 @@ class Spyder{
 
 	public:
 		bool moving = false;
-		Spyder(); 
+		Spider(); 
 		//~Wizard();
 		void setBody(Circle, Circle);
 		void setLegs(Leg [], Leg[]);

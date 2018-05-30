@@ -1,2 +1,1 @@
-# Computer-Graphics-Assignment
-A 2D and 3D spyder that moves.
+# 3D-Spider

@@ -1,7 +1,6 @@
 all:
-	@g++ -o T1 src/T1.cpp src/Spyder.cpp src/Transformations.cpp src/Geometrics.cpp -I./include -g -Wall -lglut -lGLU -lGL -lm -std=c++11	
+	@g++ -o T2 src/T2.cpp src/Geometrics.cpp src/Spider.cpp src/Transformations.cpp -I include/ -g -Wall -lglut -lGLU -lGL -lm -std=c++11	
 run:
-	@./T1
+	@./T2
 frun:
-	@valgrind -v --track-origins=yes --leak-check=full --show-leak-kinds=all ./T1
-	
+	@valgrind -v --track-origins=yes --leak-check=full --show-leak-kinds=all ./T2
