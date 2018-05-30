@@ -6,7 +6,10 @@
 #include <Transformations.h>
 #include <iostream>
 
-Spider spider = Spider();
+float abRadius = 0.5f;
+float ceRadius = abRadius/2.0;
+
+
 Point p;
 
 /* KIBEI HARD PARTE DE ILUMINAçÃO TEM QUE VER COMO FUNFA */
@@ -16,7 +19,7 @@ GLfloat mat_shininess [] = {100};
 GLfloat mat_emission [] = {0.05, 0.05, 0.05, 0.05};
 
 void ilumination(){
-     GLfloat light_position[] = {1, 1, 1, 1}; //Luz Emitida do x=0,y=0,z=0 (SOL)
+     GLfloat light_position[] = {0, 1, 0, 0}; //Luz Emitida do x=0,y=0,z=0 (SOL)
 
      glLightfv(GL_LIGHT0,GL_POSITION, light_position);
      glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
@@ -28,11 +31,20 @@ void ilumination(){
      glEnable(GL_COLOR_MATERIAL);
 }
 
-float rot = 0;
 
-void translate(){
-	rot += 0.01;
-	glTranslatef(0.0, 0.0, -rot);
+// Desenha a aranha
+void drawSpider(){
+	// Red color used to draw.
+    glColor3f(1, 0, 0); 
+    // Desenha abdomen no meio da tela
+	glutSolidSphere(abRadius,100,100);
+
+	glColor3f(0, 1, 0); 
+
+	// Tranlada pra cima do abdomen e desenha o cephalotorax
+    glTranslatef(0.75f, 0.0f, 0.0f);
+	glutSolidSphere(ceRadius,100,100);
+	
 }
 
 // Display all drawings and atualizations on the screen
@@ -41,57 +53,38 @@ void display(){
 	glEnable(GL_DEPTH_TEST);
     glClear(GL_DEPTH_BUFFER_BIT);
     
-	// Red color used to draw.
-    glColor3f(1, 0, 0); 
-    
-    /* Por cima em Y */
+    ilumination();
+	
+    /* Tela esquerda de baixo Por cima em Y */
     glPushMatrix();
     glViewport(0, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
     gluLookAt(0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0);
-    glTranslatef(0.0f ,0.75f, 0.0f);
-	glutSolidSphere(0.75f,20,20);
-
-// Draw Head
-	glTranslatef(0.0f, 1.0f, 0.0f);
-	glutSolidSphere(0.25f,20,20);
-
-// Draw Eyes
-	glPushMatrix();
-	glColor3f(0.0f,0.0f,0.0f);
-	glTranslatef(0.05f, 0.10f, 0.18f);
-	glutSolidSphere(0.05f,10,10);
-	glTranslatef(-0.1f, 0.0f, 0.0f);
-	glutSolidSphere(0.05f,10,10);
+	drawSpider();
 	glPopMatrix();
 
-// Draw Nose
-	glColor3f(1.0f, 0.5f , 0.5f);
-	glutSolidCone(0.08f,0.5f,10,2);
-    glPopMatrix();
-
-    /* De lado por X */
+    /*Tela direita de baixo De frente por Z*/
     glPushMatrix();
     glViewport(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
     gluLookAt(5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glutWireTeapot(0.5);
+    drawSpider();
     glPopMatrix();
 
-    /* Na frente da cena por Z */ 
+    /* Tela esquerda de cima Na de lado por X */ 
     glPushMatrix();
     glViewport(0, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
     gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-    glutWireTeapot(0.5);
+    drawSpider();
     glPopMatrix();
 
-    /* Aleatório */
+    /* Tela direita de cima Aleatório */
     glPushMatrix();
     glViewport(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
     gluLookAt(3.0, 2.0, 10.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    glutWireTeapot(0.5);
+    drawSpider();
     glPopMatrix();
 
 	/*Dispara os comandos APENAS uma vez */
@@ -127,13 +120,16 @@ void defaultInit(){
 void keyboardSpecial(GLint key, GLint x, GLint y){ 
     switch(key){
 	  	case GLUT_KEY_UP:
-	  		
+	  		printf("Andando pra frente\n");
 	  		break;
 	  	case GLUT_KEY_DOWN:
+	  		printf("Andando pra tras? De ré???\n");
 	  		break;
 	  	case GLUT_KEY_LEFT:
+	  		printf("Rotacionando/virando pra esquerda\n");
 	  		break;
 	  	case GLUT_KEY_RIGHT:
+	  		printf("Rotacionando/virando pra direita\n");
 	  		break;
 	  }
 	  
