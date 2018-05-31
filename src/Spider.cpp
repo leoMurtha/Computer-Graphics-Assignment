@@ -18,16 +18,12 @@ using namespace std;
 	/* Creates a random spyder, can be changed later */
 	Spider::Spider(){
 		
-			moving =false;
 			// cephalo initial position and size
 			cephalo.r = 0.25f;
-			//cephalo.c = intialPos;
 			
 
 			// abdomen initial position and size relative to cephalo
 			abdomen.r = cephalo.r*2;
-			//abdomen.c.x = cephalo.c.x;
-			//abdomen.c.y = cephalo.c.y - (abdomen.r+cephalo.r); 
 
 			cephalo.c = createPoint(cephalo.r+abdomen.r,0.0f,0.0f);
 			abdomen.c = createPoint(0.0f,0.0f,0.0f);
@@ -37,6 +33,14 @@ using namespace std;
 			angle = 0.0f;
 
 		initLegs();
+	}
+
+	Circle Spider::getCephalo(){
+	return cephalo;
+	}
+
+	Circle Spider::getAbdomen(){
+		return abdomen;
 	}
 
 
@@ -96,12 +100,12 @@ using namespace std;
    		
 	    glutSolidSphere(abdomen.r,100,100);	
 
-		glColor3f(0, 1, 0);
+		//glColor3f(0, 1, 0);
 
 		// Tranlada pra cima do abdomen e desenha o cephalotorax
 	    glTranslatef(cephalo.c.x, cephalo.c.y, cephalo.c.z);
 		glutSolidSphere(cephalo.r,100,100);	
-		glColor3f(0,0,0);
+		//glColor3f(0,0,0);
 		drawLegs();
 		glTranslatef((-1.0f)*cephalo.c.x, (-1.0f)*cephalo.c.y, (-1.0f)*cephalo.c.z);
    		

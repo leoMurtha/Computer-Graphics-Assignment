@@ -52,36 +52,36 @@ void display(){
     glPushMatrix();
     glViewport(0, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0);
-	spider.draw();
+    gluLookAt(0.0, 5.0, 0.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 1.0, 0.0, 0.0);
 	drawGrid(50, 0.7);
+	spider.draw();
 	glPopMatrix();
 
     /*Tela direita de baixo De frente por Z*/
     glPushMatrix();
     glViewport(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(5.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    spider.draw();
+    gluLookAt(5.0, 0.0, 0.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 0.0, 1.0, 0.0);
     drawGrid(50, 0.7);
+    spider.draw();
     glPopMatrix();
 
     /* Tela esquerda de cima Na de lado por X */ 
     glPushMatrix();
     glViewport(0, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+    gluLookAt(0.0, 0.0, 5.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 0.0, 1.0, 0.0);
+   	drawGrid(50, 0.7);
     spider.draw();
-    drawGrid(50, 0.7);
     glPopMatrix();
 
     /* Tela direita de cima Aleatório */
     glPushMatrix();
     glViewport(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(3.0, 2.0, 10.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
-    spider.draw();
+    gluLookAt(3.0, 2.0, 10.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 1.0, 1.0, 1.0);
     drawGrid(50, 0.7);
+    spider.draw();
     glPopMatrix();
 
 	/*Dispara os comandos APENAS uma vez */
