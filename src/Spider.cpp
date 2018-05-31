@@ -27,6 +27,7 @@ using namespace std;
 			//abdomen.c.x = cephalo.c.x;
 			//abdomen.c.y = cephalo.c.y - (abdomen.r+cephalo.r); 
 
+			//direcao = createNormalizedVector();
 
 		initLegs();
 	}
@@ -42,7 +43,7 @@ using namespace std;
 		//pata 2
 		rightLeg[1].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8),cephalo.r*sin(3*M_PI/8),0.0f);
 		rightLeg[1].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8),1.5*cephalo.r,0.0f);
-		rightLeg[1].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8),1.5*cephalo.r,0.0f);  // MUDAR
+		rightLeg[1].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8),1.5*cephalo.r,0.0f);// MUDAR
 
 		//pata 3
 		rightLeg[2].joint[0] = createPoint(cephalo.r*cos(5*M_PI/8),cephalo.r*sin(5*M_PI/8),0.0f);
@@ -52,7 +53,7 @@ using namespace std;
 		//pata 4
 		rightLeg[3].joint[0] = createPoint(cephalo.r*cos(M_PI/8),cephalo.r*sin(M_PI/8),0.0f);
 		rightLeg[3].joint[1] = createPoint(cephalo.r*cos(M_PI/8),1.5*cephalo.r*sin(M_PI/8),0.0f);
-		rightLeg[3].joint[2] = createPoint(cephalo.r*cos(M_PI/8),1.5*cephalo.r*sin(M_PI/8),0.0f); // MUDAR
+		rightLeg[3].joint[2] = createPoint(cephalo.r*cos(M_PI/8),1.5*cephalo.r*sin(M_PI/8),0.0f);// MUDAR
 
 	}
 
@@ -98,6 +99,10 @@ using namespace std;
 
 	// Movimentacao da Aranha em uma direcao
 	void Spider::move(){
+
+		// inicia as animacoes das pernas enquanto a aranha se movimenta
+		//legsAnimation();
+
 
 	}
 

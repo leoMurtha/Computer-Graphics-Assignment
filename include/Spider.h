@@ -11,10 +11,15 @@ typedef struct {
 /* Spider class its atributes and methods */
 class Spider{
 	private:	
+		// Body properties variables
 		Circle cephalo, abdomen;
 		Leg leftLeg[4], rightLeg[4];
+		// Spider Moviment variables
+		Vector direction;
+		float speed;
 
 		void initLegs();
+		void drawLegs();
 
 	public:
 
@@ -26,7 +31,6 @@ class Spider{
 		Circle getCephalo();
 		Circle getAbdomen();	
 
-		void drawLegs();
 		void draw();
 		
 		void move();

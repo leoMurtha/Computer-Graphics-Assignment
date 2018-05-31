@@ -6,7 +6,7 @@
 
 // Calculates the distance between point a and b
 float dist(Point a, Point b){
-	return sqrt(pow((a.x - b.x),2) + pow((a.y - b.y),2));
+	return sqrt(pow((a.x - b.x),2) + pow((a.y - b.y),2) + pow((a.z - b.z),2));
 }
 
 Point createPoint(float x,float y,float z){
@@ -18,24 +18,27 @@ Point createPoint(float x,float y,float z){
 }
 
 // create new vector from point a to b
-Point createVector(Point a, Point b){
-		Point v = b;
+Vector createVector(Point a, Point b){
+		Vector v;
 
-		v.x -= a.x;
-		v.y -= a.y;
+		v.x = b.x - a.x;
+		v.y = b.y - a.y;
+		v.z = b.z - a.z;
+
+		v.size = dist(a,b);
 
 		return v;
 }
 
 // Creates a new vector based on points a and b and normalizes it
-Point createNormalizedVector(Point a, Point b){
+Vector createNormalizedVector(Point a, Point b){
+	Vector v = createVector(a,b);
 
-	double vectorSize = dist(a,b);
+	v.x /= v.size;
+	v.y /= v.size;
+	v.z /= v.size;
 
-	Point v = createVector(a,b);
-
-	v.x /= vectorSize;
-	v.y /= vectorSize;
+	v.size =1.0f;
 
 	return v;
 }

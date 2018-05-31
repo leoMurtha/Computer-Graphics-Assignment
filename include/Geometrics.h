@@ -14,15 +14,16 @@ typedef struct {
 	float r;
 }Circle;
 
-Point createNormalizedVector(Point,Point);
+typedef struct {
+	float x,y,z;
+	float size;
+}Vector;
+
+Vector createVector(Point , Point );
+
+Vector createNormalizedVector(Point,Point);
 
 float dist(Point, Point);
-
-void circle(Circle);
-
-void filledCircle(Circle, bool);
-
-void line(Point, Point);
 
 Point createPoint(float,float,float);
 
