@@ -16,7 +16,7 @@ class Spider{
 		Leg leftLeg[4], rightLeg[4];
 		// Spider Moviment variables
 		Vector direction;
-		float speed;
+		float speed, angle;
 
 		void initLegs();
 		void drawLegs();
@@ -34,7 +34,7 @@ class Spider{
 		void draw();
 		
 		void move();
-		void turn();
+		void turn(float);
 		void legsAnimation();
 		
 };

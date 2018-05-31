@@ -7,7 +7,6 @@
 //#include <Transformations.h>
 #include <math.h>
 #include <ilumination.h>
-#include <deviceInput.h>
 
 //Point p;
 
@@ -89,6 +88,31 @@ void display(){
   	glFlush();
 }
 
+// checks for keyboard input
+void keyboardSpecial(GLint key, GLint x, GLint y){ 
+    switch(key){
+	  	case GLUT_KEY_UP:
+	  		printf("Andando pra frente\n");
+	  		spider.move();
+	  		break;
+	  	case GLUT_KEY_DOWN:
+	  		printf("Andando pra tras? De ré???\n");
+
+	  		break;
+	  	case GLUT_KEY_LEFT:
+	  		printf("Rotacionando/virando pra esquerda\n");
+	  		spider.turn(0.5f);
+	  		break;
+	  	case GLUT_KEY_RIGHT:
+	  		printf("Rotacionando/virando pra direita\n");
+	  		spider.turn(-0.5f);
+	  		break;
+	  }
+	  
+  std::cout<<"Tecla: "<<(GLint) key<<" (x:"<<x<<", y:"<<y<<")\n"; 
+  
+}
+
 void update(int val){
 	glutTimerFunc(fps, update, 0); // Calls update again
 	glutPostRedisplay(); // Calls the display function again
@@ -134,7 +158,6 @@ int main(int argc, char *argv[]){
 
 	defaultInit();
 
-	glutMouseFunc(mouse);
 	glutDisplayFunc(display);
 	glutSpecialFunc(keyboardSpecial);
 	glutReshapeFunc(reshape);

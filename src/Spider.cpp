@@ -18,16 +18,23 @@ using namespace std;
 	/* Creates a random spyder, can be changed later */
 	Spider::Spider(){
 		
+			moving =false;
 			// cephalo initial position and size
 			cephalo.r = 0.25f;
 			//cephalo.c = intialPos;
+			
 
 			// abdomen initial position and size relative to cephalo
 			abdomen.r = cephalo.r*2;
 			//abdomen.c.x = cephalo.c.x;
 			//abdomen.c.y = cephalo.c.y - (abdomen.r+cephalo.r); 
 
-			//direcao = createNormalizedVector();
+			cephalo.c = createPoint(cephalo.r+abdomen.r,0.0f,0.0f);
+			abdomen.c = createPoint(0.0f,0.0f,0.0f);
+
+			direction = createNormalizedVector(abdomen.c,cephalo.c);
+			speed = 0.1f;
+			angle = 0.0f;
 
 		initLegs();
 	}
@@ -78,18 +85,36 @@ using namespace std;
 	// Desenha a aranha
 	void Spider::draw(){
 		// Red color used to draw.
-   		glColor3f(1, 0, 0); 
-	    // Desenha abdomen no meio da tela
-		glutSolidSphere(abdomen.r,100,100);
+   		glColor3f(1, 0, 0);
 
-		glColor3f(0, 1, 0); 
-		
+
+	    // Desenha abdomen no meio da tela
+
+   		// Levar centro ate a posicao atual para rotacionar
+   		glTranslatef(abdomen.c.x, abdomen.c.y, abdomen.c.z);
+   		glRotatef(angle,0.0f,1.0f,0.0f);
+   		
+	    glutSolidSphere(abdomen.r,100,100);	
+
+		glColor3f(0, 1, 0);
+
 		// Tranlada pra cima do abdomen e desenha o cephalotorax
-	    glTranslatef(cephalo.r+abdomen.r, 0.0f, 0.0f);
-		glutSolidSphere(cephalo.r,100,100);
-		
+	    glTranslatef(cephalo.c.x, cephalo.c.y, cephalo.c.z);
+		glutSolidSphere(cephalo.r,100,100);	
 		glColor3f(0,0,0);
 		drawLegs();
+		glTranslatef((-1.0f)*cephalo.c.x, (-1.0f)*cephalo.c.y, (-1.0f)*cephalo.c.z);
+   		
+
+		glRotatef((-1.0f)*angle,0.0f,1.0f,0.0f);
+   		glTranslatef((-1.0f)*abdomen.c.x, (-1.0f)*abdomen.c.y, (-1.0f)*abdomen.c.z);
+		
+		// desenho do vetor direcao para testes
+		/*glBegin(GL_LINES);
+		glVertex3d(0.0f,0.0f,0.0f);
+		glVertex3d(direction.x,direction.y,direction.z);
+		glEnd();*/
+		
 	}
 
 	// Animacoes das patas
@@ -103,11 +128,20 @@ using namespace std;
 		// inicia as animacoes das pernas enquanto a aranha se movimenta
 		//legsAnimation();
 
-
-	}
+		abdomen.c.x += (direction.x)*speed;
+		abdomen.c.y += (direction.y)*speed;
+		abdomen.c.z += (direction.z)*speed;
+		
+	}	
 
 	// Mudanca de direcao da aranha
-	void Spider::turn(){
+	void Spider::turn(float ang){
+		
+		double zT = direction.z;
+		direction.z = direction.z*cos(ang*(M_PI/(180.0f))) - direction.x*sin(ang*(M_PI/(180.0f)));
+		direction.x = zT*sin(ang*(M_PI/(180.0f))) + direction.x*cos(ang*(M_PI/(180.0f)));
+
+		angle += ang;
 
 	}
 

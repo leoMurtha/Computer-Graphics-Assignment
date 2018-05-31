@@ -1,5 +1,5 @@
 all:
-	@g++ -o T2 src/T2.cpp src/Geometrics.cpp src/Spider.cpp src/Transformations.cpp src/ilumination.cpp src/deviceInput.cpp -I include/ -g -Wall -lglut -lGLU -lGL -lm -std=c++11	
+	@g++ -o T2 src/T2.cpp src/Geometrics.cpp src/Spider.cpp src/Transformations.cpp src/ilumination.cpp -I include/ -g -Wall -lglut -lGLU -lGL -lm -std=c++11	
 run:
 	@./T2
 frun:
