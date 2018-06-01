@@ -61,25 +61,24 @@ using namespace std;
 
 		//Patas da Esquerda
 		//pata 1
-		leftLeg[0].joint[0] = createPoint(0.0f,0.0f,cephalo.r);
-		leftLeg[0].joint[1] = createPoint(0.0f,cephalo.r, 1.75*cephalo.r);
-		leftLeg[0].joint[2] = createPoint(0.0f,-1.75*cephalo.r, 2.25*cephalo.r);
+		leftLeg[0].joint[0] = createPoint(0.0f,0.0f,-cephalo.r);
+		leftLeg[0].joint[1] = createPoint(0.0f,cephalo.r, -1.75*cephalo.r);
+		leftLeg[0].joint[2] = createPoint(0.0f,-1.75*cephalo.r, -2.25*cephalo.r);
 
 		//pata 2
-		leftLeg[1].joint[0] = createPoint(cephalo.r*cos(M_PI/8),0.0f,cephalo.r*sin(M_PI/8));
-		leftLeg[1].joint[1] = createPoint(cephalo.r*cos(M_PI/8),cephalo.r,1.75*cephalo.r);
-		leftLeg[1].joint[2] = createPoint(cephalo.r*cos(M_PI/8),-1.75*cephalo.r,2.25*cephalo.r);
+		leftLeg[1].joint[0] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),0.0f,cephalo.r*sin(M_PI/8 - M_PI/2));
+		leftLeg[1].joint[1] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),cephalo.r,-1.75*cephalo.r);
+		leftLeg[1].joint[2] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
 
 		//pata 3
-		leftLeg[2].joint[0] = createPoint(cephalo.r*cos(M_PI/4),0.0f,cephalo.r*sin(M_PI/4));
-		leftLeg[2].joint[1] = createPoint(cephalo.r*cos(M_PI/4),cephalo.r,1.75*cephalo.r);
-		leftLeg[2].joint[2] = createPoint(cephalo.r*cos(M_PI/4),-1.75*cephalo.r,2.25*cephalo.r);
+		leftLeg[2].joint[0] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),0.0f,cephalo.r*sin(M_PI/4 - M_PI/2));
+		leftLeg[2].joint[1] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),cephalo.r,-1.75*cephalo.r);
+		leftLeg[2].joint[2] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
 
 		//pata 4
-		leftLeg[3].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8),0.0f,cephalo.r*sin(3*M_PI/8));
-		leftLeg[3].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8),cephalo.r,1.75*cephalo.r);
-		leftLeg[3].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8),-1.75*cephalo.r,2.25*cephalo.r);
-
+		leftLeg[3].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),0.0f,cephalo.r*sin(3*M_PI/8 - M_PI/2));
+		leftLeg[3].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),cephalo.r,-1.75*cephalo.r);
+		leftLeg[3].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
 	}
 
 	// desenha uma perna
@@ -96,7 +95,7 @@ using namespace std;
 		glBegin(GL_LINES); // pega pontos dois a dois
 		
 		for (int i=0;i<4;i++) drawLeg(rightLeg[i]);
-		//for (int i=0;i<4;i++) drawLeg(leftLeg[i]);	
+		for (int i=0;i<4;i++) drawLeg(leftLeg[i]);	
 
 		glEnd();
 		glLineWidth(1);
