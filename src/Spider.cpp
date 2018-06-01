@@ -31,11 +31,17 @@ using namespace std;
 			direction = createNormalizedVector(abdomen.c,cephalo.c);
 			speed = 0.1f;
 			angle = 0.0f;
+	
+			initLegs();
+
+			for(int i=0;i<5;i++){
+				oneSideAnimation(rightLeg,-1.0,-1.0);
+				oneSideAnimation(leftLeg,-1.0,-1.0);
+			}
+
 			counter = 0;
 			legSDir= 1.0f;
 			legUpDir= 1.0f;
-
-		initLegs();
 	}
 
 	Circle Spider::getCephalo(){
