@@ -46,25 +46,50 @@ using namespace std;
 
 	void Spider::initLegs(){
 
+		//Patas da direita
+		
 		//pata 1
-		rightLeg[0].joint[0] = createPoint(0.0f,cephalo.r,0.0f);
-		rightLeg[0].joint[1] = createPoint(0.0f,1.5*cephalo.r,0.0f);
-		rightLeg[0].joint[2] = createPoint(0.0f,abdomen.r+cephalo.r,-abdomen.r);
+		rightLeg[0].joint[0] = createPoint(0.0f,0.0f,cephalo.r);
+		rightLeg[0].joint[1] = createPoint(0.0f,cephalo.r, 1.75*cephalo.r);
+		rightLeg[0].joint[2] = createPoint(0.0f,-1.75*cephalo.r, 2.25*cephalo.r);
 
 		//pata 2
-		rightLeg[1].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8),cephalo.r*sin(3*M_PI/8),0.0f);
-		rightLeg[1].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8),1.5*cephalo.r,0.0f);
-		rightLeg[1].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8),1.5*cephalo.r,0.0f);// MUDAR
+		rightLeg[1].joint[0] = createPoint(cephalo.r*cos(M_PI/8),0.0f,cephalo.r*sin(M_PI/8));
+		rightLeg[1].joint[1] = createPoint(cephalo.r*cos(M_PI/8),cephalo.r,1.75*cephalo.r);
+		rightLeg[1].joint[2] = createPoint(cephalo.r*cos(M_PI/8),-1.75*cephalo.r,2.25*cephalo.r);
 
 		//pata 3
-		rightLeg[2].joint[0] = createPoint(cephalo.r*cos(5*M_PI/8),cephalo.r*sin(5*M_PI/8),0.0f);
-		rightLeg[2].joint[1] = createPoint(cephalo.r*cos(5*M_PI/8),1.5*cephalo.r,0.0f);
-		rightLeg[2].joint[2] = createPoint(cephalo.r*cos(5*M_PI/8),1.5*cephalo.r,0.0f);// MUDAR
+		rightLeg[2].joint[0] = createPoint(cephalo.r*cos(M_PI/4),0.0f,cephalo.r*sin(M_PI/4));
+		rightLeg[2].joint[1] = createPoint(cephalo.r*cos(M_PI/4),cephalo.r,1.75*cephalo.r);
+		rightLeg[2].joint[2] = createPoint(cephalo.r*cos(M_PI/4),-1.75*cephalo.r,2.25*cephalo.r);
 
 		//pata 4
-		rightLeg[3].joint[0] = createPoint(cephalo.r*cos(M_PI/8),cephalo.r*sin(M_PI/8),0.0f);
-		rightLeg[3].joint[1] = createPoint(cephalo.r*cos(M_PI/8),1.5*cephalo.r*sin(M_PI/8),0.0f);
-		rightLeg[3].joint[2] = createPoint(cephalo.r*cos(M_PI/8),1.5*cephalo.r*sin(M_PI/8),0.0f);// MUDAR
+		rightLeg[3].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8),0.0f,cephalo.r*sin(3*M_PI/8));
+		rightLeg[3].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8),cephalo.r,1.75*cephalo.r);
+		rightLeg[3].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8),-1.75*cephalo.r,2.25*cephalo.r);
+
+		// --------------------------------
+
+		//Patas da Esquerda
+		//pata 1
+		leftLeg[0].joint[0] = createPoint(0.0f,0.0f,-cephalo.r);
+		leftLeg[0].joint[1] = createPoint(0.0f,cephalo.r, -1.75*cephalo.r);
+		leftLeg[0].joint[2] = createPoint(0.0f,-1.75*cephalo.r, -2.25*cephalo.r);
+
+		//pata 2
+		leftLeg[1].joint[0] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),0.0f,cephalo.r*sin(M_PI/8 - M_PI/2));
+		leftLeg[1].joint[1] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),cephalo.r,-1.75*cephalo.r);
+		leftLeg[1].joint[2] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
+
+		//pata 3
+		leftLeg[2].joint[0] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),0.0f,cephalo.r*sin(M_PI/4 - M_PI/2));
+		leftLeg[2].joint[1] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),cephalo.r,-1.75*cephalo.r);
+		leftLeg[2].joint[2] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
+
+		//pata 4
+		leftLeg[3].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),0.0f,cephalo.r*sin(3*M_PI/8 - M_PI/2));
+		leftLeg[3].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),cephalo.r,-1.75*cephalo.r);
+		leftLeg[3].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
 
 	}
 
@@ -78,12 +103,14 @@ using namespace std;
 
 	// Desenha todas as pernas da aranha
 	void Spider::drawLegs(){
+		glLineWidth(2);
 		glBegin(GL_LINES); // pega pontos dois a dois
 		
 		for (int i=0;i<4;i++) drawLeg(rightLeg[i]);
-		//for (int i=0;i<4;i++) drawLeg(leftLeg[i]);	
+		for (int i=0;i<4;i++) drawLeg(leftLeg[i]);	
 
 		glEnd();
+		glLineWidth(1);
 	}
 
 	// Desenha a aranha
