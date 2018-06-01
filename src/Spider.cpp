@@ -25,8 +25,8 @@ using namespace std;
 			// abdomen initial position and size relative to cephalo
 			abdomen.r = cephalo.r*2;
 
-			cephalo.c = createPoint(cephalo.r+abdomen.r,0.0f,0.0f);
-			abdomen.c = createPoint(0.0f,0.0f,0.0f);
+			cephalo.c = createPoint(0.0f,0.0f,0.0f);
+			abdomen.c = createPoint((-1.0f)*(cephalo.r+abdomen.r),0.0f,0.0f);
 
 			direction = createNormalizedVector(abdomen.c,cephalo.c);
 			speed = 0.1f;
@@ -122,23 +122,26 @@ using namespace std;
 	    // Desenha abdomen no meio da tela
 
    		// Levar centro ate a posicao atual para rotacionar
-   		glTranslatef(abdomen.c.x, abdomen.c.y, abdomen.c.z);
+   		glTranslatef(cephalo.c.x, cephalo.c.y, cephalo.c.z);
    		glRotatef(angle,0.0f,1.0f,0.0f);
    		
-	    glutSolidSphere(abdomen.r,100,100);	
+	    
 
 		//glColor3f(0, 1, 0);
 
 		// Tranlada pra cima do abdomen e desenha o cephalotorax
-	    glTranslatef(cephalo.c.x, cephalo.c.y, cephalo.c.z);
+	    
 		glutSolidSphere(cephalo.r,100,100);	
 		//glColor3f(0,0,0);
 		drawLegs();
-		glTranslatef((-1.0f)*cephalo.c.x, (-1.0f)*cephalo.c.y, (-1.0f)*cephalo.c.z);
-   		
+		
+
+		glTranslatef(abdomen.c.x, abdomen.c.y, abdomen.c.z);
+   		glutSolidSphere(abdomen.r,100,100);	
+   		glTranslatef((-1.0f)*abdomen.c.x, (-1.0f)*abdomen.c.y, (-1.0f)*abdomen.c.z);
 
 		glRotatef((-1.0f)*angle,0.0f,1.0f,0.0f);
-   		glTranslatef((-1.0f)*abdomen.c.x, (-1.0f)*abdomen.c.y, (-1.0f)*abdomen.c.z);
+   		glTranslatef((-1.0f)*cephalo.c.x, (-1.0f)*cephalo.c.y, (-1.0f)*cephalo.c.z);
 		
 		// desenho do vetor direcao para testes
 		/*glBegin(GL_LINES);
@@ -159,9 +162,9 @@ using namespace std;
 		// inicia as animacoes das pernas enquanto a aranha se movimenta
 		//legsAnimation();
 
-		abdomen.c.x += (direction.x)*speed;
-		abdomen.c.y += (direction.y)*speed;
-		abdomen.c.z += (direction.z)*speed;
+		cephalo.c.x += (direction.x)*speed;
+		cephalo.c.y += (direction.y)*speed;
+		cephalo.c.z += (direction.z)*speed;
 		
 	}	
 
