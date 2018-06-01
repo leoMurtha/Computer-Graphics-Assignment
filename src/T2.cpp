@@ -46,13 +46,13 @@ void display(){
 	glEnable(GL_DEPTH_TEST);
     glClear(GL_DEPTH_BUFFER_BIT);
     
-    ilumination();
+    //ilumination();
 	
     /* Tela esquerda de baixo Por cima em Y */
     glPushMatrix();
     glViewport(0, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(0.0, 5.0, 0.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 1.0, 0.0, 0.0);
+    gluLookAt(spider.getAbdomen().c.x, 5.0+spider.getAbdomen().c.y, spider.getAbdomen().c.z, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 1.0, 0.0, 0.0);
 	drawGrid(50, 0.7);
 	spider.draw();
 	glPopMatrix();
@@ -61,7 +61,7 @@ void display(){
     glPushMatrix();
     glViewport(WINDOW_WIDTH/2, 0, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(5.0, 0.0, 0.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 0.0, 1.0, 0.0);
+    gluLookAt(5.0+spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 0.0, 1.0, 0.0);
     drawGrid(50, 0.7);
     spider.draw();
     glPopMatrix();
@@ -70,7 +70,7 @@ void display(){
     glPushMatrix();
     glViewport(0, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(0.0, 0.0, 5.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 0.0, 1.0, 0.0);
+    gluLookAt(spider.getAbdomen().c.x, spider.getAbdomen().c.y, 5.0+spider.getAbdomen().c.z, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 0.0, 1.0, 0.0);
    	drawGrid(50, 0.7);
     spider.draw();
     glPopMatrix();
@@ -79,7 +79,7 @@ void display(){
     glPushMatrix();
     glViewport(WINDOW_WIDTH/2, WINDOW_HEIGHT/2, WINDOW_WIDTH/2, WINDOW_HEIGHT/2);
     glLoadIdentity();
-    gluLookAt(3.0, 2.0, 10.0, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 1.0, 1.0, 1.0);
+    gluLookAt(3.0+spider.getAbdomen().c.x, 2.0+spider.getAbdomen().c.y, 10.0+spider.getAbdomen().c.z, spider.getAbdomen().c.x, spider.getAbdomen().c.y, spider.getAbdomen().c.z, 1.0, 1.0, 1.0);
     drawGrid(50, 0.7);
     spider.draw();
     glPopMatrix();
