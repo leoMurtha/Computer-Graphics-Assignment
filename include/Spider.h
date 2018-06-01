@@ -6,6 +6,7 @@
 
 typedef struct {
 	Point joint[3]; /* Leg has 3 joints */ 
+	float sideAngle = 0.0f,upAngle = 0.0f;
 }Leg;
 
 /* Spider class its atributes and methods */
@@ -16,10 +17,12 @@ class Spider{
 		Leg leftLeg[4], rightLeg[4];
 		// Spider Moviment variables
 		Vector direction;
-		float speed, angle;
+		float speed, angle, legSDir,legUpDir;
+		int counter;
 
 		void initLegs();
 		void drawLegs();
+		void oneSideAnimation(Leg *,float ,float );
 
 	public:
 

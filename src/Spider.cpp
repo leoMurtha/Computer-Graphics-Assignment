@@ -31,6 +31,9 @@ using namespace std;
 			direction = createNormalizedVector(abdomen.c,cephalo.c);
 			speed = 0.1f;
 			angle = 0.0f;
+			counter = 0;
+			legSDir= 1.0f;
+			legUpDir= 1.0f;
 
 		initLegs();
 	}
@@ -117,21 +120,35 @@ using namespace std;
 
 	// desenha uma perna
 	void drawLeg(Leg l){
-		for(int i=1;i<3;i++){	
+		for(int i=1;i<3;i++){
+			
+
+			glRotatef(l.sideAngle,0.0,1.0,0.0);	
+			//glRotatef(l.upAngle,1.0,0.0,0.0);
+			
+			glBegin(GL_LINES);
+
 			glVertex3d(l.joint[i-1].x,l.joint[i-1].y,l.joint[i-1].z);
 			glVertex3d(l.joint[i].x,l.joint[i].y,l.joint[i].z);
+
+
+			glEnd();
+
+			//glRotatef((-1.0)*l.upAngle,1.0,0.0,0.0);
+			glRotatef((-1.0)*l.sideAngle,0.0,1.0,0.0);	
+			
 		}	 
 	}
 
 	// Desenha todas as pernas da aranha
 	void Spider::drawLegs(){
 		glLineWidth(2);
-		glBegin(GL_LINES); // pega pontos dois a dois
+		 // pega pontos dois a dois
 		
 		for (int i=0;i<4;i++) drawLeg(rightLeg[i]);
 		for (int i=0;i<4;i++) drawLeg(leftLeg[i]);	
 
-		glEnd();
+		
 		glLineWidth(1);
 	}
 
@@ -173,16 +190,42 @@ using namespace std;
 		
 	}
 
-	// Animacoes das patas
-	void Spider::legsAnimation(){
+	void Spider::oneSideAnimation(Leg *l,float sdir,float updir){
 
+		//primeira pata
+		l[0].sideAngle += sdir*(2.0);
+		l[0].upAngle += updir*(1.0);
+		// primeira pata pequena
+		l[1].sideAngle += sdir*(-0.5);
+		l[1].upAngle += updir;
+		// segunda pata pequena
+		l[2].sideAngle += sdir*(0.5);
+		l[2].upAngle += updir;
+		// ultima pata
+		l[3].sideAngle += sdir*(-0.5);
+		l[3].upAngle += updir;
+	}
+
+	// Animacoes das patas
+	void Spider::legsAnimation(){	
+
+		oneSideAnimation(rightLeg,legSDir,legUpDir);
+		oneSideAnimation(leftLeg,legSDir,legUpDir);
+
+		if(counter == 5)legUpDir = (-1.0)*legUpDir; 
+		if(counter == 10){
+			counter = 0;
+			legSDir = (-1.0)*legSDir;
+			legUpDir = (-1.0)*legUpDir;
+		}else counter++;
+	
 	}
 
 	// Movimentacao da Aranha em uma direcao
 	void Spider::move(){
 
 		// inicia as animacoes das pernas enquanto a aranha se movimenta
-		//legsAnimation();
+		legsAnimation();
 
 		cephalo.c.x += (direction.x)*speed;
 		cephalo.c.y += (direction.y)*speed;
@@ -192,6 +235,8 @@ using namespace std;
 
 	// Mudanca de direcao da aranha
 	void Spider::turn(float ang){
+
+		legsAnimation();
 		
 		double zT = direction.z;
 		direction.z = direction.z*cos(ang*(M_PI/(180.0f))) - direction.x*sin(ang*(M_PI/(180.0f)));
