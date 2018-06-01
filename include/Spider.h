@@ -23,6 +23,8 @@ class Spider{
 		void initLegs();
 		void drawLegs();
 		void oneSideAnimation(Leg *,float ,float );
+		void startLegAnimation();
+		void endLegAnimation();
 
 	public:
 

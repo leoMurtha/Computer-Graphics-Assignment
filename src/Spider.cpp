@@ -34,10 +34,7 @@ using namespace std;
 	
 			initLegs();
 
-			for(int i=0;i<5;i++){
-				oneSideAnimation(rightLeg,-1.0,-1.0);
-				oneSideAnimation(leftLeg,-1.0,-1.0);
-			}
+			startLegAnimation();
 
 			counter = 0;
 			legSDir= 1.0f;
@@ -102,26 +99,6 @@ using namespace std;
 		leftLeg[3].joint[2] = createPoint(3.5*cephalo.r*(-1.0f)*sin(M_PI/5),-1.75*cephalo.r,(-3.5)*cephalo.r*cos(M_PI/5));
 
 
-		//pata 1
-		/*leftLeg[0].joint[0] = createPoint(0.0f,0.0f,-cephalo.r);
-		leftLeg[0].joint[1] = createPoint(0.0f,cephalo.r, -1.75*cephalo.r);
-		leftLeg[0].joint[2] = createPoint(0.0f,-1.75*cephalo.r, -2.25*cephalo.r);
-
-		//pata 2
-		leftLeg[1].joint[0] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),0.0f,cephalo.r*sin(M_PI/8 - M_PI/2));
-		leftLeg[1].joint[1] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),cephalo.r,-1.75*cephalo.r);
-		leftLeg[1].joint[2] = createPoint(cephalo.r*cos(M_PI/8 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
-
-		//pata 3
-		leftLeg[2].joint[0] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),0.0f,cephalo.r*sin(M_PI/4 - M_PI/2));
-		leftLeg[2].joint[1] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),cephalo.r,-1.75*cephalo.r);
-		leftLeg[2].joint[2] = createPoint(cephalo.r*cos(M_PI/4 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);
-
-		//pata 4
-		leftLeg[3].joint[0] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),0.0f,cephalo.r*sin(3*M_PI/8 - M_PI/2));
-		leftLeg[3].joint[1] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),cephalo.r,-1.75*cephalo.r);
-		leftLeg[3].joint[2] = createPoint(cephalo.r*cos(3*M_PI/8 - M_PI/2),-1.75*cephalo.r,-2.25*cephalo.r);*/
-
 	}
 
 	// desenha uma perna
@@ -130,7 +107,7 @@ using namespace std;
 			
 
 			glRotatef(l.sideAngle,0.0,1.0,0.0);	
-			//glRotatef(l.upAngle,1.0,0.0,0.0);
+			glRotatef(l.upAngle,1.0,0.0,0.0);
 			
 			glBegin(GL_LINES);
 
@@ -140,7 +117,7 @@ using namespace std;
 
 			glEnd();
 
-			//glRotatef((-1.0)*l.upAngle,1.0,0.0,0.0);
+			glRotatef((-1.0)*l.upAngle,1.0,0.0,0.0);
 			glRotatef((-1.0)*l.sideAngle,0.0,1.0,0.0);	
 			
 		}	 
@@ -200,26 +177,49 @@ using namespace std;
 
 		//primeira pata
 		l[0].sideAngle += sdir*(2.0);
-		l[0].upAngle += updir*(1.0);
+		l[0].upAngle += updir*(2.0);
+		printf("%f\n",l[0].upAngle);
 		// primeira pata pequena
 		l[1].sideAngle += sdir*(-0.5);
-		l[1].upAngle += updir;
+		l[1].upAngle += updir*(1.0);
 		// segunda pata pequena
 		l[2].sideAngle += sdir*(0.5);
-		l[2].upAngle += updir;
+		l[2].upAngle += updir*(1.0);
+
 		// ultima pata
 		l[3].sideAngle += sdir*(-0.5);
-		l[3].upAngle += updir;
+		l[3].upAngle += updir*(2.0);
 	}
 
+	void Spider::startLegAnimation(){
+		for(int i=0;i<5;i++){
+				oneSideAnimation(rightLeg,-1.0,0.0);
+				oneSideAnimation(leftLeg,-1.0,0.0);
+		}
+	}
+
+	void Spider::endLegAnimation(){		
+		while(counter!=5){
+			oneSideAnimation(rightLeg,legSDir,legUpDir);
+			oneSideAnimation(leftLeg,legSDir,(-1.0)*legUpDir);
+		
+			if(counter>5) counter--;
+			else counter++;	
+		}
+		counter = 0;
+		legSDir= 1.0f;
+		legUpDir= 1.0f;
+
+	}
 	// Animacoes das patas
 	void Spider::legsAnimation(){	
 
-		oneSideAnimation(rightLeg,legSDir,legUpDir);
+		oneSideAnimation(rightLeg,legSDir,(-1.0)*legUpDir);
 		oneSideAnimation(leftLeg,legSDir,legUpDir);
 
-		if(counter == 5)legUpDir = (-1.0)*legUpDir; 
-		if(counter == 10){
+		if(counter == 4)legUpDir = (-1.0)*legUpDir; 
+
+		if(counter == 9){
 			counter = 0;
 			legSDir = (-1.0)*legSDir;
 			legUpDir = (-1.0)*legUpDir;
